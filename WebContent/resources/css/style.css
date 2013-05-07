@@ -1,1 +1,37 @@
 @CHARSET "UTF-8";
+/* created by weiyiming */
+html, body {
+	color:#222;
+	font-family:"Microsoft YaHei", Helvitica, Verdana, Tohoma, Arial, san-serif;
+	background-color:#f0f0f0;
+	margin:0 auto;
+	padding: 0;
+	text-decoration: none;
+	width:320px
+}
+ol, ul {
+	list-style: none outside none;
+	margin:0;
+	padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size:100%;
+	/*font-weight:normal;*/
+}
+h2{ font-size:16px;}
+h3 {font-size: 18px;  margin:0; padding:0;}
+.clr{ clear:both}
+.marginb { display: block;margin-bottom: 15px;}
+.content {margin: 10px; text-decoration: none; word-wrap: break-word;}
+.content p {color: #666666;font-size: 14px; line-height: 1.5; margin:0; padding:0;}
+.content img {height: auto;max-width: 100%;border: 0 none;}
+
+#footer{color:#666666;font-size:8px;text-align:center;margin:5px 0 0 0;padding:5px 0;border-top-style:solid;border-top-width:2px;border-top-color:#c8101b;}
+#header{margin:0 0 5px 0;background-color:#ffffff;padding:5px 0 0 0;}
+#logo{height:60px;background-image:url(../../resources/img/logo.jpg);background-repeat:no-repeat;}
+#label{background-color:#c8101b;padding:5px 5px;}
+#label span{margin:0px 10px;color:#ffffff;font-size:16px;}
+#main{text-align:center;margin:10px auto;padding:5px 0;width:96%;border:1px solid #dddddd;background-color:#ffffff;border-radius:0.4em;}
+.signin{font-size:small}
+.signin ul li{margin:10px auto;display:block;}
+#bindImg{margin:15px 0 10px 100px;height:60px;background-image:url(../../resources/img/bind.png);background-repeat:no-repeat;}

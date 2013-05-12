@@ -1,4 +1,4 @@
-package com.lionnet.gpay;
+package com.lionnet.gpay.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package com.lionnet.gpay;
+package com.lionnet.gpay.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class BalanceQuery
+ * Servlet implementation class RecordQuery
  */
-@WebServlet("/BalanceQuery")
-public class BalanceQuery extends HttpServlet {
+@WebServlet("/RecordQuery")
+public class RecordQuery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BalanceQuery() {
+    public RecordQuery() {
         super();
         // TODO Auto-generated constructor stub
     }

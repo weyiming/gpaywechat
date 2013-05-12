@@ -9,10 +9,10 @@
 <div id="main">
 	<div class="signin">
 	<div id="bindImg"></div>
-	<form action="" method="post">
+	<form action="/AccountBind" method="post">
 		<ul>
-			<li>智慧卡账户：<input type="text"/></li>
-			<li>智慧卡密码：<input type="password"/></li>
+			<li>智慧支付账户：<input type="text" name="gpayAccount"/></li>
+			<li>智慧支付密码：<input type="password" name="gpayPassword"/></li>
 			<li><input type="submit" value="绑  定"/></li>
 		</ul>
 	</form>

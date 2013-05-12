@@ -1,4 +1,4 @@
-package com.lionnet.gpay;
+package com.lionnet.gpay.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MyServletDispather
+ * Servlet implementation class BranchesGetter
  */
-@WebServlet("/MyServletDispather")
-public class MyServletDispather extends HttpServlet {
+@WebServlet("/BranchesGetter")
+public class BranchesGetter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyServletDispather() {
+    public BranchesGetter() {
         super();
         // TODO Auto-generated constructor stub
     }

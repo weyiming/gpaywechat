@@ -1,6 +1,7 @@
 package com.lionnet.gpay.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 
 import javax.servlet.ServletException;
@@ -29,7 +30,15 @@ public class AccountBind extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("view/accountBind.jsp").forward(request, response);
+		String userName = request.getParameter("userName");
+		String content = "请使用一下链接绑定您的微信账号和智惠支付账号：" + "http://xxxxx";
+		MyXMLController xmlController = new MyXMLController();
+		xmlController.initOutputDocument();
+		String textMessage = xmlController.creatTextMessage(userName, content);
+		response.setCharacterEncoding("utf-8");
+		PrintWriter writer =  response.getWriter();
+		writer.print(textMessage);
+		writer.flush();
 	}
 
 	/**

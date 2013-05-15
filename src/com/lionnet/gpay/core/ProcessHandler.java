@@ -19,13 +19,13 @@ public class ProcessHandler {
 		this.response = response;
 	}
 	
-	public String getUserMessage()
+	public String getUserMessageNode(String nodeName)
 	{
 		MyXMLController xmlController;
 		try {
 			xmlController = new MyXMLController();
 			xmlController.initInputDocument(request.getInputStream());
-			return xmlController.getNodeContent("Content");
+			return xmlController.getNodeContent(nodeName);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,7 +36,7 @@ public class ProcessHandler {
 	/* 跟据用户指令设定要转发的servlet */
 	public void switchServlet()
 	{
-		String userMessage = getUserMessage();
+		String userMessage = getUserMessageNode("Content");
 		switch(userMessage)
 		{
 			case WordsDic.BIND:
@@ -82,7 +82,10 @@ public class ProcessHandler {
 	{
 		try {
 			if (servletToGo == WordsDic.BIND_SERVLET)
-				response.sendRedirect("redirect:/AccountBind");
+				{	
+					String userName = getUserMessageNode("FromUserName");
+					response.sendRedirect("redirect:/AccountBind?uderName=" + userName);
+				}
 			else
 				request.getRequestDispatcher(servletToGo).forward(request, response);
 		} catch (ServletException e) {

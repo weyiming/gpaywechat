@@ -8,6 +8,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+/* 操作xml文件辅助类，使用DOM4J */
 public class MyXMLController {
 	private InputStream fromXML;
 	private SAXReader reader;
@@ -51,7 +52,7 @@ public class MyXMLController {
 		Element fromUserNameElement = root.addElement("FromUserName");
 		fromUserNameElement.addCDATA(Contants.DEVELOPER_WECHAT_ACCOUNT);
 		
-		/* 返回时间戳 */
+		/* 返回时间戳  */
 		Element createTimeElement = root.addElement("CreateTime");
 		createTimeElement.addText(String.valueOf(System.currentTimeMillis()));
 		
@@ -67,16 +68,19 @@ public class MyXMLController {
 		return XMLToString();
 	}
 	
+	/* 创建音乐信息 */
 	public String creatMusicMessage()
 	{
 		return null;
 	}
 	
+	/* 创建图文信息 */
 	public String creatPictureMessage()
 	{
 		return null;
 	}
 	
+	/* 将xml文档转化为string方便输出 */
 	public String XMLToString()
 	{		
 		String docString = document.asXML();

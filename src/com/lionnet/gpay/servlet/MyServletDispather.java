@@ -46,7 +46,6 @@ public class MyServletDispather extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProcessHandler handler = new ProcessHandler(request, response);
-		handler.switchServlet();
-		handler.dispatch();
+		handler.switchServletAndDispatch();
 	}
 }

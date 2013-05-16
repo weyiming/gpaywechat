@@ -2,7 +2,7 @@ package com.lionnet.gpay.core;
 
 public class WordsDic {
 	/* servlet地址 */
-	public static final String BIND_SERVLET = "/AccountBind";
+	public static final String BIND_SERVLET = "/AccountBindLink";
 	public static final String BALANCE_SERVLET = "/BalanceQuery";
 	public static final String RECORD_SERVLET = "/RecordQuery";
 	public static final String MERCHANT_SERVLET = "/MerchantsGetter";
@@ -21,6 +21,7 @@ public class WordsDic {
 	
 	/* 返回信息 */
 	public static final String WELCOME = "欢迎您关注智惠支付微信公众账户！";
+	public static final String UNBOUND_TEXT = "很遗憾，您还未进行微信和智惠支付账户的绑定，不能执行刚才的操作，请回复“绑定”完成账户的绑定操作。";
 	public static final String ERROR_TEXT = "很遗憾，您所输入的信息我不能识别，请按照帮助文档输入指令";
 	public static final String HELP_TEXT = 
 			"帮助信息：\n" +

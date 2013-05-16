@@ -10,6 +10,7 @@
 	<div class="signin">
 	<div id="bindImg"></div>
 	<form action="/AccountBind" method="post">
+		<input type="hidden" value="${userName}"/>
 		<ul>
 			<li>智慧支付账户：<input type="text" name="gpayAccount"/></li>
 			<li>智慧支付密码：<input type="password" name="gpayPassword"/></li>

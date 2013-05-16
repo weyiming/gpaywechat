@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.lionnet.gpay.core.ProcessHandler;
 import com.lionnet.gpay.utils.MyXMLController;
 
 /**
@@ -30,31 +31,24 @@ public class AccountBind extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userName = request.getParameter("userName");
-		String content = "请使用一下链接绑定您的微信账号和智惠支付账号：" + "http://xxxxx";
-		MyXMLController xmlController = new MyXMLController();
-		xmlController.initOutputDocument();
-		String textMessage = xmlController.creatTextMessage(userName, content);
-		response.setCharacterEncoding("utf-8");
-		PrintWriter writer =  response.getWriter();
-		writer.print(textMessage);
-		writer.flush();
+		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userName = request.getParameter("userName");
 		String gpayAccount = request.getParameter("gpayAccount");
 		String gpayPassword = request.getParameter("gpayPassword");
 		
 		/* 向北京智惠支付服务器递交绑定请求 */
-		URL url = new URL("http://test.com");	//现为拟造网址，后期要替换为北京服务器接口网址
+		URL bindUrl = new URL("http://test.com");	//现为拟造网址，后期要替换为北京服务器接口网址
 		
 		/* 从服务器取得绑定结果 */
-		MyXMLController xmlController = new MyXMLController();
-		xmlController.initInputDocument(url.openStream());
-		int result = Integer.parseInt(xmlController.getNodeContent("bingResult"));
+		ProcessHandler handler = new ProcessHandler(request, response);
+		handler.setURLMode(bindUrl);
+		int result = Integer.parseInt(handler.getMessageByNodeName("bingResult"));
 		request.setAttribute("result", result);
 		request.getRequestDispatcher("view/bindResult.jsp").forward(request, response);
 	}

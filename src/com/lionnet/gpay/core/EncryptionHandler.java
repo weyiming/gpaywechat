@@ -29,6 +29,8 @@ public class EncryptionHandler {
 	private MessageDigest md5;
 	private String originalText;
 	
+	EncryptionHandler() {}
+	
 	EncryptionHandler(String originalText)
 	{
 		this.originalText = originalText;
@@ -39,6 +41,12 @@ public class EncryptionHandler {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setOriginalText(String originalText)
+	{
+		this.originalText = originalText;
+	}
+	
 	private String append(String originalText, String appendText)
 	{
 		return originalText + appendText;

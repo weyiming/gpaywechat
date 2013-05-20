@@ -10,19 +10,28 @@ import org.dom4j.io.SAXReader;
 
 /* 操作xml文件辅助类，使用DOM4J */
 public class MyXMLController {
-	private InputStream fromXML;
 	private SAXReader reader;
 	private Document document;
 	private Element root;
 	
 	
-	/* 初始化有输入源的文档，对文档进行相关操作，主要为读取信息  */
+	/* 初始化有输入源的文档，对文档进行相关操作，主要为读取信息,此处为输入流，未加密，来源为微信或其它  */
 	public void initInputDocument(InputStream in)
 	{
-		fromXML = in;
 		reader = new SAXReader();
 		try {
-			document = reader.read(fromXML);
+			document = reader.read(in);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/* 初始化有输入源的文档，对文档进行相关操作，主要为读取信息，此处为string，解密后，来源为北京服务器  */
+	public void initInputDocument(String in)
+	{
+		reader = new SAXReader();
+		try {
+			document = reader.read(in);
 		} catch (DocumentException e) {
 			e.printStackTrace();
 		}
@@ -43,6 +52,29 @@ public class MyXMLController {
 		return element.getText();
 	}
 	
+	public String createBindMessage(String gpayAccount, String gpayPassword, String wechatOpenID)
+	{
+		Element gpayAccountElement = root.addElement("gpayAccount");
+		gpayAccountElement.addText(gpayAccount);
+		
+		Element gpayPasswordElement = root.addElement("gpayPassword");
+		gpayPasswordElement.addText(gpayPassword);
+		
+		Element wechatOpenIDElement = root.addElement("wechatOpenID");
+		wechatOpenIDElement.addText(wechatOpenID);
+		
+		return XMLToString();
+	}
+	
+	public String createWechatOpenIDMessage(String wechatOpenID)
+	{
+		Element wechatOpenIDElement = root.addElement("wechatOpenID");
+		wechatOpenIDElement.addText(wechatOpenID);
+		
+		return XMLToString();
+	}
+	
+	/* 创建文本回复消息 */
 	public String creatTextMessage(String toUserName, String content)
 	{
 		/* 创建文本回复消息，在根元素下分别创建符合格式的元素 */

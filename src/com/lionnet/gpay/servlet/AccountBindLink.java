@@ -39,7 +39,7 @@ public class AccountBindLink extends HttpServlet {
 		ProcessHandler handler = new ProcessHandler(request, response);
 		handler.setMode(ProcessHandlerMode.READ_MODE);
 		String userName = handler.getUserName();
-		String content = "请使用以下链接绑定您的微信账号和智惠支付账号：http://xxxxx?userName=" + userName;
+		String content = "请使用以下链接绑定您的微信账号和智惠支付账号：http://xxxxx?wechatOpenID=" + userName;
 		handler.setMode(ProcessHandlerMode.WRITE_MODE);
 		handler.pushToUser(content);
 	}

@@ -1,7 +1,11 @@
 package com.lionnet.gpay.core;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.servlet.ServletException;
@@ -15,6 +19,8 @@ public class ProcessHandler {
 	private HttpServletResponse response;
 	private String servletToGo;
 	private MyXMLController xmlController;
+	private EncryptionHandler ehandler;
+	private URL url;
 	
 	public ProcessHandler(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -24,7 +30,8 @@ public class ProcessHandler {
 	
 	public void setMode(ProcessHandlerMode mode)
 	{	
-		xmlController = new MyXMLController();
+		if (xmlController == null)
+			xmlController = new MyXMLController();
 		switch(mode)
 		{
 			case READ_MODE:
@@ -42,11 +49,27 @@ public class ProcessHandler {
 		}
 	}
 	
-	public void setURLMode(URL url)
+	public void setURLMode(String url)
 	{
 		try {
-			xmlController.initInputDocument(url.openStream());
+			this.url = new URL(url);
+			xmlController.initInputDocument(this.url.openStream());
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setEncryptionURLMode(String url)
+	{
+		try {
+			this.url = new URL(url);
+			if (xmlController == null)
+				xmlController = new MyXMLController();
+			if (ehandler == null)
+				ehandler = new EncryptionHandler();
+		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -78,7 +101,10 @@ public class ProcessHandler {
 	
 	public boolean pushToUser(String content)
 	{
+		// 生成xml类型的string串
 		String textMessage = xmlController.creatTextMessage(getUserName(), content);
+		
+		// 输出给用户
 		response.setCharacterEncoding("utf-8");
 		PrintWriter writer;
 		try {
@@ -144,5 +170,50 @@ public class ProcessHandler {
 			servletToGo = WordsDic.RECORD_SERVLET;
 		if (userDirective.contains(WordsDic.WEATHER))
 			servletToGo = WordsDic.WEATHER_SERVLET;
+	}
+	
+	/* 从输入流中获取string，在此处为北京服务器的连接中获取，以便进行解码工作 */
+	private String getStringFromConn(InputStream in) throws IOException
+	{
+		InputStream bin = new BufferedInputStream(in);
+		byte[] buf = new byte[1024];
+		StringBuilder sb = new StringBuilder("");
+		while (bin.read(buf) != 1)
+			sb.append(new String(buf));	//必须new一个String，否则使用byte.toString()方法会出现编码问题，造成结果不一致
+		return sb.toString();
+	}
+	
+	public void postToServer(String gpayAccount, String gpayPassword, String wechatOpenID)
+	{
+		xmlController.initOutputDocument();
+		String postText = xmlController.createBindMessage(gpayAccount, gpayPassword, wechatOpenID);
+		postAndInitInput(url, postText);
+	}
+	
+	public void postToServer(String wechatOpenID)
+	{
+		xmlController.initOutputDocument();
+		String postText = xmlController.createWechatOpenIDMessage(wechatOpenID);
+		postAndInitInput(url, postText);
+	}
+	
+	private void postAndInitInput(URL url, String postText)
+	{
+		ehandler.setOriginalText(postText);
+		String postTextAfterEncrypt = ehandler.encoder();
+		try {
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			conn.setDoOutput(true);
+			conn.connect();
+			PrintWriter writer = new PrintWriter(conn.getOutputStream());
+			writer.write(postTextAfterEncrypt);
+			writer.flush();
+			String textFromConn = getStringFromConn(conn.getInputStream());
+			ehandler.setOriginalText(textFromConn);
+			String textAfterDecoder = ehandler.decoder();
+			xmlController.initInputDocument(textAfterDecoder);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

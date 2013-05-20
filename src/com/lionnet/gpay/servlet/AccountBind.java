@@ -38,16 +38,17 @@ public class AccountBind extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userName = request.getParameter("userName");
+		String wechatOpenID = request.getParameter("wechatOpenID");
 		String gpayAccount = request.getParameter("gpayAccount");
 		String gpayPassword = request.getParameter("gpayPassword");
 		
 		/* 向北京智惠支付服务器递交绑定请求 */
-		URL bindUrl = new URL("http://test.com");	//现为拟造网址，后期要替换为北京服务器接口网址
+		String bindUrl = "http://test.com";	//现为拟造网址，后期要替换为北京服务器接口网址
 		
 		/* 从服务器取得绑定结果 */
 		ProcessHandler handler = new ProcessHandler(request, response);
-		handler.setURLMode(bindUrl);
+		handler.setEncryptionURLMode(bindUrl);
+		handler.postToServer(gpayAccount, gpayPassword, wechatOpenID);
 		int result = Integer.parseInt(handler.getMessageByNodeName("bingResult"));
 		request.setAttribute("result", result);
 		request.getRequestDispatcher("view/bindResult.jsp").forward(request, response);

@@ -74,6 +74,7 @@ public class EncryptionHandler {
 	public String getInputChecksum()
 	{
 		BASE64Decoder decoder = new BASE64Decoder();
+        return null;
 	}
 	
 	public String encoder()
@@ -85,5 +86,6 @@ public class EncryptionHandler {
 	public String decoder()
 	{
 		//BASE64Decoder decoder = new BASE64Decoder();
+        return null;
 	}
 }

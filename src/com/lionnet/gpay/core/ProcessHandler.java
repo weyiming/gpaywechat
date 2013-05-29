@@ -123,34 +123,54 @@ public class ProcessHandler {
 	{
 		setMode(ProcessHandlerMode.READ_MODE);
 		String userDirective = getUserDirective();
-		switch(userDirective)
-		{
-			case WordsDic.BIND:
-				servletToGo = WordsDic.BIND_SERVLET;
-				break;
-			case WordsDic.BALANCE:
-				servletToGo = WordsDic.BALANCE_SERVLET;
-				break;
-			case WordsDic.DETAIL:
-				servletToGo = WordsDic.RECORD_SERVLET;
-				break;
-			case WordsDic.MERCHANT:
-				servletToGo = WordsDic.MERCHANT_SERVLET;
-				break;
-			case WordsDic.BRANCH:
-				servletToGo = WordsDic.BALANCE_SERVLET;
-				break;
-			case WordsDic.SERVICE:
-				servletToGo = WordsDic.SREVICE_SERVLET;
-				break;
-			case WordsDic.WEATHER:
-				servletToGo = WordsDic.WEATHER_SERVLET;
-				break;
-			default:
-				other(userDirective);
-				break;
-		}
-		
+
+//        以下代码适用于java7，低于7的版本switch语句中无法使用String类型
+//		switch(userDirective)
+//		{
+//			case WordsDic.BIND:
+//				servletToGo = WordsDic.BIND_SERVLET;
+//				break;
+//			case WordsDic.BALANCE:
+//				servletToGo = WordsDic.BALANCE_SERVLET;
+//				break;
+//			case WordsDic.DETAIL:
+//				servletToGo = WordsDic.RECORD_SERVLET;
+//				break;
+//			case WordsDic.MERCHANT:
+//				servletToGo = WordsDic.MERCHANT_SERVLET;
+//				break;
+//			case WordsDic.BRANCH:
+//				servletToGo = WordsDic.BALANCE_SERVLET;
+//				break;
+//			case WordsDic.SERVICE:
+//				servletToGo = WordsDic.SREVICE_SERVLET;
+//				break;
+//			case WordsDic.WEATHER:
+//				servletToGo = WordsDic.WEATHER_SERVLET;
+//				break;
+//			default:
+//				other(userDirective);
+//				break;
+//		}
+
+//        java7以下版本使用以下代码
+        if (userDirective.equals(WordsDic.BIND))
+            servletToGo = WordsDic.BIND_SERVLET;
+        else if (userDirective.equals(WordsDic.BALANCE))
+		    servletToGo = WordsDic.BALANCE_SERVLET;
+        else if (userDirective.equals(WordsDic.DETAIL))
+            servletToGo = WordsDic.RECORD_SERVLET;
+        else if (userDirective.equals(WordsDic.BRANCH))
+            servletToGo = WordsDic.BRANCH_SERVLET;
+        else if (userDirective.equals(WordsDic.MERCHANT))
+            servletToGo = WordsDic.MERCHANT_SERVLET;
+        else if (userDirective.equals(WordsDic.SERVICE))
+            servletToGo = WordsDic.SREVICE_SERVLET;
+        else if (userDirective.equals(WordsDic.WEATHER))
+            servletToGo = WordsDic.WEATHER_SERVLET;
+        else other(userDirective);
+
+
 		/* 派发到指定的servlet */
 		try {
 			request.getRequestDispatcher(servletToGo).forward(request, response);

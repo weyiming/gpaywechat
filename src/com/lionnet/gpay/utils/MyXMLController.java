@@ -1,12 +1,12 @@
 package com.lionnet.gpay.utils;
 
-import java.io.InputStream;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+
+import java.io.InputStream;
 
 /* 操作xml文件辅助类，使用DOM4J */
 public class MyXMLController {
@@ -51,27 +51,53 @@ public class MyXMLController {
 		Element element = (Element)document.selectSingleNode("//" + nodeName);
 		return element.getText();
 	}
-	
-	public String createBindMessage(String gpayAccount, String gpayPassword, String wechatOpenID)
+
+    /* 在xml报文中加入md5校验码 */
+    public void appendMD5(String checksum)
+    {
+        Element md5ELement = root.addElement("md5");
+        md5ELement.addText(checksum);
+    }
+
+    /* 创建账户绑定的xml报文 */
+	public void createBindMessage(String openID, String gpayAccount, String pinblock)
 	{
-		Element gpayAccountElement = root.addElement("gpayAccount");
-		gpayAccountElement.addText(gpayAccount);
+        createOpenIDAndGpayAccountMessage(openID, gpayAccount);
 		
-		Element gpayPasswordElement = root.addElement("gpayPassword");
-		gpayPasswordElement.addText(gpayPassword);
-		
-		Element wechatOpenIDElement = root.addElement("wechatOpenID");
-		wechatOpenIDElement.addText(wechatOpenID);
-		
-		return XMLToString();
+		Element gpayPasswordElement = root.addElement("binklock");
+		gpayPasswordElement.addText(pinblock);
 	}
-	
-	public String createWechatOpenIDMessage(String wechatOpenID)
+
+    /* 创建商户查询xml报文 */
+    public void createMerchantMessage(String openID, String page, String type, String area)
+    {
+        createOpenIDAndPageMessage(openID, page);
+
+        Element typeElemnt = root.addElement("type");
+        typeElemnt.addText(type);
+
+        Element areaElement = root.addElement("area");
+        areaElement.addText(area);
+    }
+
+    /* 创建包含openID和page的xml报文，可用于商户查询和网点查询 */
+    public void createOpenIDAndPageMessage(String openID, String page)
+    {
+        Element openIDElement = root.addElement("openID");
+        openIDElement.addText(openID);
+
+        Element pageElement = root.addElement("page");
+        pageElement.addText(page);
+    }
+
+    /* 创建包含openID和gpayAccount的xml报文,可用于账户绑定和余额查询、明显查询 */
+	public void createOpenIDAndGpayAccountMessage(String openID, String gpayAccount)
 	{
-		Element wechatOpenIDElement = root.addElement("wechatOpenID");
-		wechatOpenIDElement.addText(wechatOpenID);
-		
-		return XMLToString();
+		Element openIDElement = root.addElement("openID");
+		openIDElement.addText(openID);
+
+        Element gpayAccountElement = root.addElement("gpayAccount");
+        gpayAccountElement.addText(gpayAccount);
 	}
 	
 	/* 创建文本回复消息 */
@@ -122,6 +148,9 @@ public class MyXMLController {
 	public static void main(String[] args)
 	{
 		MyXMLController m = new MyXMLController();
+        m.initOutputDocument();
 		System.out.println(m.creatTextMessage("aaaaaa", "我了个擦"));
+        m.appendMD5("md5xxxxxxxx");
+        System.out.println(m.XMLToString());
 	}
 }

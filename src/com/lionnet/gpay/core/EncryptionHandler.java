@@ -1,10 +1,9 @@
 package com.lionnet.gpay.core;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
+import com.chinagpay.cgp.merch.util.PinBlock;
+import com.chinagpay.mer.bean.DigestUtil;
+import com.chinagpay.mer.bean.ProcessMessage;
 import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 /* 	
  * 	传送数据时的加密流程
@@ -24,68 +23,75 @@ import sun.misc.BASE64Encoder;
  * 	如果一致再进行后续业务逻辑处理，不一致就中断
  * */
 
+//    报文发送以httppost发送xml格式
+//        报文格式样例（账户绑定）：
+//        <xml>
+//        <gpayAccount>账户</gpayAccount>
+//        <pinblock>16位16进制字符串</pinblock>
+//        <openID>微信号</openID>
+//        </xml>
+//
+//        以字符串形式再加上chinagoldenpay-xiaozhuan-wechat-123789456
+//        得到MD5签名
+//
+//        错误报文(除账户绑定外)
+//        <xml>
+//        <errorCode>0098</errorCode>
+//        <errorMsg>系统异常</ errorMsg >
+//        <md5>MD5签名</md5>
+//        </xml>
+//
+//        <xml>
+//        <gpayAccount>账户</gpayAccount>
+//        <pinblock>16位16进制字符串</pinblock>
+//        <openID>微信号</openID>
+//        <md5>MD5签名</md5>
+//        </xml>
+//
+//        BASE64加密后得到密文
+//
+//        MD5签名生成方法：
+//        导入PKIBASE.jar和smapi_20120920.jar
+//        String sign=DigestUtil.hmacSign(“<xml><operID>1212</operID></xml>”,”chinagoldenpay-xiaozhuan-wechat-123789456”);
+//        BASE64加密方法：
+//        String base64Str=ProcessMessage.Base64Encode(“<xml><operID>1212</operID><md5>ade3ade3</md5></xml>”.getByte());
+//
+//        Pinblock生成方法：
+//        1.导入 pinBlock.jar 和在src下放入CGPPinBlock.properties配置文件
+//        2.调用 String pinBlock= PinBlock.getPinBlock(“卡号”,”密码”);
+//
+
 public class EncryptionHandler {
 	private static final String MD5_KEY = "chinagoldenpay-xiaozhuan-wechat-123789456";
-	private MessageDigest md5;
-	private String originalText;
-	
-	EncryptionHandler() {}
-	
-	EncryptionHandler(String originalText)
-	{
-		this.originalText = originalText;
-		try 
-		{
-			md5 = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void setOriginalText(String originalText)
-	{
-		this.originalText = originalText;
-	}
-	
-	private String append(String originalText, String appendText)
-	{
-		return originalText + appendText;
-	}
 
-	private String getOutputChecksum()
+	public static String getOutputChecksum(String originalText)
 	{
-		md5.update(append(originalText, MD5_KEY).getBytes());
-		byte[] b = md5.digest();
-		int i;
-        StringBuilder buf = new StringBuilder("");
-        for (int offset = 0; offset < b.length; offset++) 
-        {
-            i = b[offset];
-            if (i < 0)
-                i += 256;
-            if (i < 16)
-                buf.append("0");
-            buf.append(Integer.toHexString(i));
-        }
-        
-        return buf.toString();
-	}
+		return DigestUtil.hmacSign(originalText, MD5_KEY);
+    }
 	
-	public String getInputChecksum()
+	public static String getInputChecksum()
 	{
 		BASE64Decoder decoder = new BASE64Decoder();
         return null;
 	}
-	
-	public String encoder()
+
+    public static String pinBlock(String gpayAccount, String gpayPassword)
+    {
+        try {
+            return PinBlock.getPinBlock(gpayAccount, gpayPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+	public static String encoder(String originalText)
 	{
-		BASE64Encoder encoder = new BASE64Encoder();
-		return encoder.encode((originalText + getOutputChecksum()).getBytes());
+		return ProcessMessage.Base64Encode(originalText.getBytes());
 	}
 	
-	public String decoder()
-	{
-		//BASE64Decoder decoder = new BASE64Decoder();
-        return null;
+	public static String decoder(String originalText)
+    {
+        return new String(ProcessMessage.Base64Decode(originalText));
 	}
 }

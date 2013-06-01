@@ -1,14 +1,14 @@
 package com.lionnet.gpay.servlet;
 
-import java.io.IOException;
+import com.lionnet.gpay.core.ProcessHandler;
+import com.lionnet.gpay.core.ProcessHandlerMode;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.lionnet.gpay.core.ProcessHandler;
-import com.lionnet.gpay.core.ProcessHandlerMode;
+import java.io.IOException;
 
 /**
  * Servlet implementation class AccountBindLink
@@ -39,7 +39,7 @@ public class AccountBindLink extends HttpServlet {
 		ProcessHandler handler = new ProcessHandler(request, response);
 		handler.setMode(ProcessHandlerMode.READ_MODE);
 		String userName = handler.getUserName();
-		String content = "请使用以下链接绑定您的微信账号和智惠支付账号：http://xxxxx?wechatOpenID=" + userName;
+		String content = "请使用以下链接绑定您的微信账号和智惠支付账号：http://xxxxx?openID=" + userName;
 		handler.setMode(ProcessHandlerMode.WRITE_MODE);
 		handler.pushToUser(content);
 	}

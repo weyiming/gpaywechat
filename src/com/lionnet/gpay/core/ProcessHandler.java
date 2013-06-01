@@ -1,5 +1,11 @@
 package com.lionnet.gpay.core;
 
+import com.lionnet.gpay.utils.Contants;
+import com.lionnet.gpay.utils.MyXMLController;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,26 +14,104 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.lionnet.gpay.utils.MyXMLController;
-
+/*  ProcessHandler是控制整个流程的核心类
+    主要功能有3点
+    1：根据用户指令，派发请求到本地的servlet响应，只用于MyServletDispatch中；
+    2：用于读取微信所post的xml报文中的内容，并进行处理返回给用户微信开发api中特定格式的xml报文；
+    3：用于与北京服务器交互，其中加密解密用到了EncryptionHandler类
+ */
 public class ProcessHandler {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private String servletToGo;
 	private MyXMLController xmlController;
-	private EncryptionHandler ehandler;
 	private URL url;
 	
-	public ProcessHandler(HttpServletRequest request, HttpServletResponse response)
+	/* 构造函数用于转发请求，也可读取request输入流中的内容,并向reaponse中输出流写入内容 */
+    public ProcessHandler(HttpServletRequest request, HttpServletResponse response)
 	{
 		this.request = request;
 		this.response = response;
 	}
-	
+
+    /*  实现功能1
+     *  跟据用户指令设定要转发的servlet
+     */
+    public void switchServletAndDispatch()
+    {
+        setMode(ProcessHandlerMode.READ_MODE);
+        String userDirective = getUserDirective();
+
+//        以下代码适用于java7，低于7的版本switch语句中无法使用String类型
+//		switch(userDirective)
+//		{
+//			case Contants.BIND:
+//				servletToGo = Contants.BIND_SERVLET;
+//				break;
+//			case Contants.BALANCE:
+//				servletToGo = Contants.BALANCE_SERVLET;
+//				break;
+//			case Contants.DETAIL:
+//				servletToGo = Contants.RECORD_SERVLET;
+//				break;
+//			case Contants.MERCHANT:
+//				servletToGo = Contants.MERCHANT_SERVLET;
+//				break;
+//			case Contants.BRANCH:
+//				servletToGo = Contants.BALANCE_SERVLET;
+//				break;
+//			case Contants.SERVICE:
+//				servletToGo = Contants.SREVICE_SERVLET;
+//				break;
+//			case Contants.WEATHER:
+//				servletToGo = Contants.WEATHER_SERVLET;
+//				break;
+//			default:
+//				other(userDirective);
+//				break;
+//		}
+
+//        java7以下版本使用以下代码
+        if (userDirective.equals(Contants.BIND))
+            servletToGo = Contants.BIND_SERVLET;
+        else if (userDirective.equals(Contants.BALANCE))
+            servletToGo = Contants.BALANCE_SERVLET;
+        else if (userDirective.equals(Contants.DETAIL))
+            servletToGo = Contants.RECORD_SERVLET;
+        else if (userDirective.equals(Contants.BRANCH))
+            servletToGo = Contants.BRANCH_SERVLET;
+        else if (userDirective.equals(Contants.MERCHANT))
+            servletToGo = Contants.MERCHANT_SERVLET;
+        else if (userDirective.equals(Contants.SERVICE))
+            servletToGo = Contants.SREVICE_SERVLET;
+        else if (userDirective.equals(Contants.WEATHER))
+            servletToGo = Contants.WEATHER_SERVLET;
+        else other(userDirective);
+
+
+		/* 派发到指定的servlet */
+        try {
+            request.getRequestDispatcher(servletToGo).forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* 其他指令，#后包含具体信息的指令 */
+    private void other(String userDirective)
+    {
+        if (userDirective.contains(Contants.BALANCE))
+            servletToGo = Contants.BALANCE_SERVLET;
+        if (userDirective.contains(Contants.DETAIL))
+            servletToGo = Contants.RECORD_SERVLET;
+        if (userDirective.contains(Contants.WEATHER))
+            servletToGo = Contants.WEATHER_SERVLET;
+    }
+    /* 功能1 end */
+
+    /* 设定handler的模式，读取或输出,主要是与微信服务器进行xml报文的通信，不包括与北京服务器进行的加密通信 */
 	public void setMode(ProcessHandlerMode mode)
 	{	
 		if (xmlController == null)
@@ -49,7 +133,8 @@ public class ProcessHandler {
 		}
 	}
 	
-	public void setURLMode(String url)
+	/* 此模式用于与普通url进行不加密的通信，譬如调用新浪天气api取得天气信息 */
+    public void setURLMode(String url)
 	{
 		try {
 			this.url = new URL(url);
@@ -61,14 +146,13 @@ public class ProcessHandler {
 		}
 	}
 	
-	public void setEncryptionURLMode(String url)
+	/* 此模式用于与北京服务器的加密通信 */
+    public void setEncryptionURLMode(String url)
 	{
 		try {
 			this.url = new URL(url);
 			if (xmlController == null)
 				xmlController = new MyXMLController();
-			if (ehandler == null)
-				ehandler = new EncryptionHandler();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -79,26 +163,30 @@ public class ProcessHandler {
 		return xmlController.getNodeContent(nodeName);
 	}
 	
-	private String getUserDirective()
+	/* 获取用户的指令 */
+    private String getUserDirective()
 	{
 		return getMessageByNodeName("Content");
 	}
-	
-	public String[] getUserDirectiveContent()
+
+    /* 获取用户指令包含的内容，例如天气后跟的城市名，余额后跟的想要查询的账户号 */
+	public String getUserDirectiveContent()
 	{
 		String fullDirective = getUserDirective();
 		if (fullDirective.contains("#"))
 		{
-			return fullDirective.substring(fullDirective.indexOf("#")).split("#");
+			return fullDirective.split("#")[1];
 		}
-		return null;
+		return "";
 	}
-	
+
+    /* 获取用户的username，也是openID */
 	public String getUserName()
 	{
 		return getMessageByNodeName("FromUserName");
 	}
-	
+
+    /* 此处为非页面信息，直接文字推送给用户 */
 	public boolean pushToUser(String content)
 	{
 		// 生成xml类型的string串
@@ -118,80 +206,6 @@ public class ProcessHandler {
 		return false;
 	}
 	
-	/* 跟据用户指令设定要转发的servlet */
-	public void switchServletAndDispatch()
-	{
-		setMode(ProcessHandlerMode.READ_MODE);
-		String userDirective = getUserDirective();
-
-//        以下代码适用于java7，低于7的版本switch语句中无法使用String类型
-//		switch(userDirective)
-//		{
-//			case WordsDic.BIND:
-//				servletToGo = WordsDic.BIND_SERVLET;
-//				break;
-//			case WordsDic.BALANCE:
-//				servletToGo = WordsDic.BALANCE_SERVLET;
-//				break;
-//			case WordsDic.DETAIL:
-//				servletToGo = WordsDic.RECORD_SERVLET;
-//				break;
-//			case WordsDic.MERCHANT:
-//				servletToGo = WordsDic.MERCHANT_SERVLET;
-//				break;
-//			case WordsDic.BRANCH:
-//				servletToGo = WordsDic.BALANCE_SERVLET;
-//				break;
-//			case WordsDic.SERVICE:
-//				servletToGo = WordsDic.SREVICE_SERVLET;
-//				break;
-//			case WordsDic.WEATHER:
-//				servletToGo = WordsDic.WEATHER_SERVLET;
-//				break;
-//			default:
-//				other(userDirective);
-//				break;
-//		}
-
-//        java7以下版本使用以下代码
-        if (userDirective.equals(WordsDic.BIND))
-            servletToGo = WordsDic.BIND_SERVLET;
-        else if (userDirective.equals(WordsDic.BALANCE))
-		    servletToGo = WordsDic.BALANCE_SERVLET;
-        else if (userDirective.equals(WordsDic.DETAIL))
-            servletToGo = WordsDic.RECORD_SERVLET;
-        else if (userDirective.equals(WordsDic.BRANCH))
-            servletToGo = WordsDic.BRANCH_SERVLET;
-        else if (userDirective.equals(WordsDic.MERCHANT))
-            servletToGo = WordsDic.MERCHANT_SERVLET;
-        else if (userDirective.equals(WordsDic.SERVICE))
-            servletToGo = WordsDic.SREVICE_SERVLET;
-        else if (userDirective.equals(WordsDic.WEATHER))
-            servletToGo = WordsDic.WEATHER_SERVLET;
-        else other(userDirective);
-
-
-		/* 派发到指定的servlet */
-		try {
-			request.getRequestDispatcher(servletToGo).forward(request, response);
-		} catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/* 其他指令，#后跟具体信息 */
-	private void other(String userDirective)
-	{
-		if (userDirective.contains(WordsDic.BALANCE))
-			servletToGo = WordsDic.BALANCE_SERVLET;
-		if (userDirective.contains(WordsDic.DETAIL))
-			servletToGo = WordsDic.RECORD_SERVLET;
-		if (userDirective.contains(WordsDic.WEATHER))
-			servletToGo = WordsDic.WEATHER_SERVLET;
-	}
-	
 	/* 从输入流中获取string，在此处为北京服务器的连接中获取，以便进行解码工作 */
 	private String getStringFromConn(InputStream in) throws IOException
 	{
@@ -203,24 +217,40 @@ public class ProcessHandler {
 		return sb.toString();
 	}
 	
-	public void postToServer(String gpayAccount, String gpayPassword, String wechatOpenID)
+	/*
+	    以下postToServer()方法采用多态，向北京服务器推送请求的消息，
+	    主要进行了消息的md5校验，然后进行加密传送给北京
+	 */
+
+    /* 绑定账户，其中密码进行了pinblock加密 */
+    public void postToServer(String openID, String gpayAccount, String gpayPassword)
 	{
 		xmlController.initOutputDocument();
-		String postText = xmlController.createBindMessage(gpayAccount, gpayPassword, wechatOpenID);
-		postAndInitInput(url, postText);
+        String pinblock = EncryptionHandler.pinBlock(gpayAccount, gpayPassword);
+        xmlController.createBindMessage(openID, gpayAccount, pinblock);
+		postAndInitInput(url);
 	}
-	
-	public void postToServer(String wechatOpenID)
+
+    /* 可用于余额查询和明显查询 */
+	public void postToServer(String openID, String gpayAccount)
 	{
 		xmlController.initOutputDocument();
-		String postText = xmlController.createWechatOpenIDMessage(wechatOpenID);
-		postAndInitInput(url, postText);
+		xmlController.createOpenIDAndGpayAccountMessage(openID, gpayAccount);
+		postAndInitInput(url);
 	}
-	
-	private void postAndInitInput(URL url, String postText)
+
+    /*
+        提取了公共的操作，
+        1、进行校验码计算；
+        2、在xml报文中加入校验码经过BASE64加密后推送给北京；
+        3、url中获取并初始化北京返回的报文。
+     */
+	private void postAndInitInput(URL url)
 	{
-		ehandler.setOriginalText(postText);
-		String postTextAfterEncrypt = ehandler.encoder();
+        String checksum = EncryptionHandler.getOutputChecksum(xmlController.XMLToString());
+        xmlController.appendMD5(checksum);
+		String postTextAfterEncrypt = EncryptionHandler.encoder(xmlController.XMLToString());
+
 		try {
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			conn.setDoOutput(true);
@@ -228,10 +258,9 @@ public class ProcessHandler {
 			PrintWriter writer = new PrintWriter(conn.getOutputStream());
 			writer.write(postTextAfterEncrypt);
 			writer.flush();
+
 			String textFromConn = getStringFromConn(conn.getInputStream());
-			ehandler.setOriginalText(textFromConn);
-			String textAfterDecoder = ehandler.decoder();
-			xmlController.initInputDocument(textAfterDecoder);
+			xmlController.initInputDocument(EncryptionHandler.decoder(textFromConn));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

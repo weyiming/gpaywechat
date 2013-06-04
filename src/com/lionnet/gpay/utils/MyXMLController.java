@@ -1,5 +1,6 @@
 package com.lionnet.gpay.utils;
 
+import com.thoughtworks.xstream.XStream;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -8,7 +9,7 @@ import org.dom4j.io.SAXReader;
 
 import java.io.InputStream;
 
-/* 操作xml文件辅助类，使用DOM4J */
+/* 操作xml文件辅助类，读写和生成xml操作使用DOM4J，xml转java对象使用XStream */
 public class MyXMLController {
 	private SAXReader reader;
 	private Document document;
@@ -51,6 +52,12 @@ public class MyXMLController {
 		Element element = (Element)document.selectSingleNode("//" + nodeName);
 		return element.getText();
 	}
+
+    /* 移除指定的element */
+    public boolean removeElement(String name)
+    {
+        return document.remove(document.selectSingleNode(name));
+    }
 
     /* 在xml报文中加入md5校验码 */
     public void appendMD5(String checksum)
@@ -144,7 +151,16 @@ public class MyXMLController {
 		String docString = document.asXML();
 		return docString.substring(docString.indexOf("<xml>"));
 	}
-	
+
+    /* xml转为java对象,调用了xstream */
+    public Object xmlToBean(String lstTag, String tag, Class lstClazz, Class clazz, String xml)
+    {
+        XStream xStream = new XStream();
+        xStream.alias(lstTag, lstClazz);
+        xStream.alias(tag, clazz);
+        return xStream.fromXML(xml);
+    }
+
 	public static void main(String[] args)
 	{
 		MyXMLController m = new MyXMLController();

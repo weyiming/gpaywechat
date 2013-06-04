@@ -1,18 +1,15 @@
 package com.lionnet.gpay.servlet;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.lionnet.gpay.core.ProcessHandler;
+import com.lionnet.gpay.core.ProcessHandlerMode;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.lionnet.gpay.core.ProcessHandler;
-import com.lionnet.gpay.core.ProcessHandlerMode;
-import com.lionnet.gpay.utils.MyXMLController;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 /**
  * Servlet implementation class WeatherAsker
@@ -41,7 +38,7 @@ public class WeatherAsker extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProcessHandler handler = new ProcessHandler(request, response);
 		handler.setMode(ProcessHandlerMode.READ_MODE);
-		String city = handler.getUserDirectiveContent()[0];
+		String city = handler.getUserDirectiveContent();
 		String content = getWeather(city, handler);
 		handler.setMode(ProcessHandlerMode.WRITE_MODE);
 		handler.pushToUser(content);

@@ -57,7 +57,7 @@ public class ProcessHandler {
 //			case Contants.MERCHANT:
 //				servletToGo = Contants.MERCHANT_SERVLET;
 //				break;
-//			case Contants.BRANCH:
+//			case Contants.NET:
 //				servletToGo = Contants.BALANCE_SERVLET;
 //				break;
 //			case Contants.SERVICE:
@@ -77,15 +77,17 @@ public class ProcessHandler {
         else if (userDirective.equals(Contants.BALANCE))
             servletToGo = Contants.BALANCE_SERVLET;
         else if (userDirective.equals(Contants.DETAIL))
-            servletToGo = Contants.RECORD_SERVLET;
-        else if (userDirective.equals(Contants.BRANCH))
-            servletToGo = Contants.BRANCH_SERVLET;
+            servletToGo = Contants.DETAIL_SERVLET;
+        else if (userDirective.equals(Contants.NET))
+            servletToGo = Contants.NET_SERVLET;
         else if (userDirective.equals(Contants.MERCHANT))
             servletToGo = Contants.MERCHANT_SERVLET;
-        else if (userDirective.equals(Contants.SERVICE))
-            servletToGo = Contants.SREVICE_SERVLET;
+        else if (userDirective.equals(Contants.ADVICE))
+            servletToGo = Contants.ADVICE_SERVLET;
         else if (userDirective.equals(Contants.WEATHER))
             servletToGo = Contants.WEATHER_SERVLET;
+        else if (userDirective.equals(Contants.HELP))
+            servletToGo = Contants.HELP_SERVLET;
         else other(userDirective);
 
 
@@ -105,7 +107,7 @@ public class ProcessHandler {
         if (userDirective.contains(Contants.BALANCE))
             servletToGo = Contants.BALANCE_SERVLET;
         if (userDirective.contains(Contants.DETAIL))
-            servletToGo = Contants.RECORD_SERVLET;
+            servletToGo = Contants.DETAIL_SERVLET;
         if (userDirective.contains(Contants.WEATHER))
             servletToGo = Contants.WEATHER_SERVLET;
     }
@@ -247,7 +249,7 @@ public class ProcessHandler {
      */
 	private void postAndInitInput(URL url)
 	{
-        String checksum = EncryptionHandler.getOutputChecksum(xmlController.XMLToString());
+        String checksum = EncryptionHandler.getChecksum(xmlController.XMLToString());
         xmlController.appendMD5(checksum);
 		String postTextAfterEncrypt = EncryptionHandler.encoder(xmlController.XMLToString());
 
@@ -265,4 +267,15 @@ public class ProcessHandler {
 			e.printStackTrace();
 		}
 	}
+
+    /*
+        对信息的来源进行验证，确保来自北京服务器
+        取出md5校验值与本地生成的校验值进行对比
+     */
+    public boolean checkFrom()
+    {
+        String md5 = xmlController.getNodeContent("md5");
+        xmlController.removeElement("md5");
+        return md5.equals(EncryptionHandler.getChecksum(xmlController.XMLToString()));
+    }
 }

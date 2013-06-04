@@ -3,7 +3,6 @@ package com.lionnet.gpay.core;
 import com.chinagpay.cgp.merch.util.PinBlock;
 import com.chinagpay.mer.bean.DigestUtil;
 import com.chinagpay.mer.bean.ProcessMessage;
-import sun.misc.BASE64Decoder;
 
 /* 	
  * 	传送数据时的加密流程
@@ -64,16 +63,10 @@ import sun.misc.BASE64Decoder;
 public class EncryptionHandler {
 	private static final String MD5_KEY = "chinagoldenpay-xiaozhuan-wechat-123789456";
 
-	public static String getOutputChecksum(String originalText)
+	public static String getChecksum(String originalText)
 	{
 		return DigestUtil.hmacSign(originalText, MD5_KEY);
     }
-	
-	public static String getInputChecksum()
-	{
-		BASE64Decoder decoder = new BASE64Decoder();
-        return null;
-	}
 
     public static String pinBlock(String gpayAccount, String gpayPassword)
     {

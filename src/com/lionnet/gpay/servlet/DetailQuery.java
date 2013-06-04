@@ -1,23 +1,23 @@
 package com.lionnet.gpay.servlet;
 
-import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
- * Servlet implementation class BranchesGetter
+ * Servlet implementation class DetailQuery
  */
-@WebServlet("/BranchesGetter")
-public class BranchesGetter extends HttpServlet {
+@WebServlet("/DetailQuery")
+public class DetailQuery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BranchesGetter() {
+    public DetailQuery() {
         super();
         // TODO Auto-generated constructor stub
     }

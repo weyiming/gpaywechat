@@ -1,5 +1,7 @@
 package com.lionnet.gpay.utils;
 
+import com.lionnet.gpay.entity.Merchant;
+import com.lionnet.gpay.entity.Merchants;
 import com.thoughtworks.xstream.XStream;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -8,6 +10,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /* 操作xml文件辅助类，读写和生成xml操作使用DOM4J，xml转java对象使用XStream */
 public class MyXMLController {
@@ -44,7 +47,13 @@ public class MyXMLController {
 		document = DocumentHelper.createDocument();
 		root = document.addElement("xml");
 	}
-	
+
+    /* 是否含有指定名称的节点 */
+	public boolean contains(String nodeName)
+    {
+        return XMLToString().contains(nodeName);
+    }
+
 	/* 取得特定名称的元素文本信息 */
 	public String getNodeContent(String nodeName)
 	{
@@ -164,9 +173,39 @@ public class MyXMLController {
 	public static void main(String[] args)
 	{
 		MyXMLController m = new MyXMLController();
-        m.initOutputDocument();
+        /*m.initOutputDocument();
 		System.out.println(m.creatTextMessage("aaaaaa", "我了个擦"));
         m.appendMD5("md5xxxxxxxx");
-        System.out.println(m.XMLToString());
+        System.out.println(m.XMLToString());*/
+        Merchants merchants = (Merchants)m.xmlToBean("merchantList", "merchant", Merchants.class, Merchant.class,
+
+                        "<merchantList>\n" +
+                        "<merchant>\n" +
+                        "<area>朝阳区</area>\n" +
+                        "<name>湘西土菜（北辰店）</name>\n" +
+                        "<address>朝阳区北辰东路8号辰运大厦一层</address>\n" +
+                        "<tel>84984421</tel>\n" +
+                        "<type>餐饮</type>\n" +
+                        "</merchant>\n" +
+                        "<merchant>\n" +
+                        "<area>朝阳区</area>\n" +
+                        "<name>凯丝恩贝（三元桥店）</name>\n" +
+                        "<address>朝阳区东三环北路丙2号三元桥天云港地下一层</address>\n" +
+                        "<tel>84464119</tel>\n" +
+                        "<type>餐饮</type>\n" +
+                        "</merchant>\n" +
+                        "</merchantList><md5>17285bfca55c5a349c692352108b2de1</md5>");
+
+        ArrayList<Merchant> ml = merchants.getMerchants();
+        System.out.println(ml.size());
+        /*for (Merchant merchant:ml)
+        {
+            System.out.println(merchant.getArea());
+            System.out.println(merchant.getName());
+            System.out.println(merchant.getTel());
+            System.out.println(merchant.getAddress());
+            System.out.println(merchant.getType());
+            System.out.println("-----------------");
+        }*/
 	}
 }

@@ -45,6 +45,12 @@ public class BalanceQuery extends HttpServlet {
         /* 像北京服务器发送查询xml报文 */
         handler.setEncryptionURLMode(Contants.BALANCE_URL);
         handler.postToServer(openID, gpayAccount);
+
+        if (!handler.checkFromAndError())
+        {
+            handler.setMode(ProcessHandlerMode.WRITE_MODE);
+            handler.pushToUser(openID, Contants.SERVLET_ERROR);
+        }
 	}
 
 }

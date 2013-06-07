@@ -1,6 +1,8 @@
 package com.lionnet.gpay.servlet;
 
 import com.lionnet.gpay.core.ProcessHandler;
+import com.lionnet.gpay.core.ProcessHandlerMode;
+import com.lionnet.gpay.utils.Contants;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,6 +45,12 @@ public class MyServletDispather extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProcessHandler handler = new ProcessHandler(request, response);
-		handler.switchServletAndDispatch();
+
+		/* 用户指令错误返回信息 */
+        if (!handler.switchServletAndDispatch())
+        {
+            handler.setMode(ProcessHandlerMode.WRITE_MODE);
+            handler.pushToUser(Contants.SERVLET_ERROR);
+        }
 	}
 }

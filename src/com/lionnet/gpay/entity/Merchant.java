@@ -14,6 +14,15 @@ public class Merchant {
     private String name;        //商户名
     private String address;     //商户地址
     private String tel;         //商户电话
+    private String type;        //商户类型
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getArea() {
 

@@ -7,6 +7,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /* 操作xml文件辅助类，读写和生成xml操作使用DOM4J，xml转java对象使用XStream */
@@ -32,7 +33,7 @@ public class MyXMLController {
 	{
 		reader = new SAXReader();
 		try {
-			document = reader.read(in);
+			document = reader.read(new ByteArrayInputStream(in.getBytes()));
 		} catch (DocumentException e) {
 			e.printStackTrace();
 		}
@@ -52,6 +53,12 @@ public class MyXMLController {
 		Element element = (Element)document.selectSingleNode("//" + nodeName);
 		return element.getText();
 	}
+
+    /* 是否包含指定名称的节点 */
+    public boolean isHas(String nodeName)
+    {
+        return XMLToString().contains(nodeName);
+    }
 
     /* 移除指定的element */
     public boolean removeElement(String name)
@@ -157,16 +164,35 @@ public class MyXMLController {
     {
         XStream xStream = new XStream();
         xStream.alias(lstTag, lstClazz);
+        xStream.addImplicitCollection(lstClazz, lstTag);
         xStream.alias(tag, clazz);
-        return xStream.fromXML(xml);
+        return xStream.fromXML(xml.substring(xml.indexOf("<xml>") + 5, xml.indexOf("</xml>")));
     }
 
 	public static void main(String[] args)
 	{
-		MyXMLController m = new MyXMLController();
-        m.initOutputDocument();
+		/*MyXMLController m = new MyXMLController();
+        *//*m.initOutputDocument();
 		System.out.println(m.creatTextMessage("aaaaaa", "我了个擦"));
         m.appendMD5("md5xxxxxxxx");
-        System.out.println(m.XMLToString());
+        System.out.println(m.XMLToString());*//*
+        m.initInputDocument(new ByteArrayInputStream(("<merchants>" +
+                            "<merchant>" +
+                            "<area>area1</area>" +
+                "<name>name1</name><address>address1</address><tel>tel1</tel></merchant>" +
+                "<merchant><area>area2</area><name>name2</name><address>address2</address><tel>tel2</tel></merchant>" +
+                "</merchants>").getBytes()));
+        String xml = "<xml><merchants>" +
+        "<merchant>" +
+                "<area>area1</area>" +
+                "<name>name1</name><address>address1</address><tel>tel1</tel></merchant>" +
+                "<merchant><area>area2</area><name>name2</name><address>address2</address><tel>tel2</tel></merchant>" +
+                "</merchants><aaa></aaa></xml>";
+        Merchants merchants = (Merchants)m.xmlToBean("merchants", "merchant", Merchants.class, Merchant.class, xml);
+        ArrayList<Merchant> merchantArrayList = merchants.getMerchants();
+        for (Merchant merchant:merchantArrayList)
+        {
+            System.out.println(merchant.getArea());
+        }*/
 	}
 }

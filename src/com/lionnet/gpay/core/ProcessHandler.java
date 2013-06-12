@@ -37,7 +37,7 @@ public class ProcessHandler {
     /*  实现功能1
      *  跟据用户指令设定要转发的servlet
      */
-    public void switchServletAndDispatch()
+    public boolean switchServletAndDispatch()
     {
         setMode(ProcessHandlerMode.READ_MODE);
         String userDirective = getUserDirective();
@@ -88,8 +88,14 @@ public class ProcessHandler {
             servletToGo = Contants.WEATHER_SERVLET;
         else if (userDirective.equals(Contants.HELP))
             servletToGo = Contants.HELP_SERVLET;
-        else other(userDirective);
-
+        else if (userDirective.contains(Contants.BALANCE))
+            servletToGo = Contants.BALANCE_SERVLET;
+        else if (userDirective.contains(Contants.DETAIL))
+            servletToGo = Contants.DETAIL_SERVLET;
+        else if (userDirective.contains(Contants.WEATHER))
+            servletToGo = Contants.WEATHER_SERVLET;
+        else
+            return false;
 
 		/* 派发到指定的servlet */
         try {
@@ -99,17 +105,7 @@ public class ProcessHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /* 其他指令，#后包含具体信息的指令 */
-    private void other(String userDirective)
-    {
-        if (userDirective.contains(Contants.BALANCE))
-            servletToGo = Contants.BALANCE_SERVLET;
-        if (userDirective.contains(Contants.DETAIL))
-            servletToGo = Contants.DETAIL_SERVLET;
-        if (userDirective.contains(Contants.WEATHER))
-            servletToGo = Contants.WEATHER_SERVLET;
+        return true;
     }
     /* 功能1 end */
 
@@ -189,23 +185,28 @@ public class ProcessHandler {
 	}
 
     /* 此处为非页面信息，直接文字推送给用户 */
-	public boolean pushToUser(String content)
+    public boolean pushToUser(String openID, String content)
+    {
+        // 生成xml类型的string串
+        String textMessage = xmlController.creatTextMessage(openID, content);
+
+        // 输出给用户
+        response.setCharacterEncoding("utf-8");
+        PrintWriter writer;
+        try {
+            writer = response.getWriter();
+            writer.print(textMessage);
+            writer.flush();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean pushToUser(String content)
 	{
-		// 生成xml类型的string串
-		String textMessage = xmlController.creatTextMessage(getUserName(), content);
-		
-		// 输出给用户
-		response.setCharacterEncoding("utf-8");
-		PrintWriter writer;
-		try {
-			writer = response.getWriter();
-			writer.print(textMessage);
-			writer.flush();
-			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return false;
+		return pushToUser(getUserName(), content);
 	}
 	
 	/* 从输入流中获取string，在此处为北京服务器的连接中获取，以便进行解码工作 */
@@ -268,6 +269,11 @@ public class ProcessHandler {
 		}
 	}
 
+    public Object getResult(String lstTag, String tag, Class lstClazz, Class clazz)
+    {
+        return xmlController.xmlToBean(lstTag, tag, lstClazz, clazz, xmlController.XMLToString());
+    }
+
     /*
         对信息的来源进行验证，确保来自北京服务器
         取出md5校验值与本地生成的校验值进行对比
@@ -277,5 +283,11 @@ public class ProcessHandler {
         String md5 = xmlController.getNodeContent("md5");
         xmlController.removeElement("md5");
         return md5.equals(EncryptionHandler.getChecksum(xmlController.XMLToString()));
+    }
+
+    /* 检查是否是错误报文 */
+    public boolean isError()
+    {
+        return xmlController.isHas("errorCode");
     }
 }

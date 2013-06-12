@@ -38,7 +38,7 @@ public class Contants
     /* 返回信息 */
     public static final String WELCOME = "欢迎您关注智惠支付微信公众账户！";
     public static final String UNBOUND = "很遗憾，您还未进行微信和智惠支付账户的绑定，不能执行刚才的操作，请回复“绑定”完成账户的绑定操作。";
-    public static final String UNKNOW_DIRECTIVE_ERROR = "很遗憾，您所输入的信息我不能识别，请按照帮助文档输入指令";
+    public static final String UNKNOW_DIRECTIVE_ERROR = "很遗憾，您所输入的信息我不能识别，请按照帮助文档输入指令\n";
     public static final String SERVLET_ERROR = "很抱歉，服务器出错了，请检查格式，再次发送指令";
     public static final String HELP_TEXT =
             "帮助信息：\n" +

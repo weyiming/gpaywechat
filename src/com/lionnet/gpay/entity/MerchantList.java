@@ -9,14 +9,14 @@ import java.util.ArrayList;
  * Time: 下午7:26
  * To change this template use File | Settings | File Templates.
  */
-public class Merchants {
-    private ArrayList<Merchant> merchants;
+public class MerchantList {
+    private ArrayList<Merchant> merchantList;
 
     public ArrayList<Merchant> getMerchants() {
-        return merchants;
+        return merchantList;
     }
 
-    public void setMerchants(ArrayList<Merchant> merchants) {
-        this.merchants = merchants;
+    public void setMerchants(ArrayList<Merchant> merchantList) {
+        this.merchantList = merchantList;
     }
 }

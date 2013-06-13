@@ -9,7 +9,7 @@ package com.lionnet.gpay.entity;
  */
 
 /* 购卡网点对应的实体类，用以xml转java对象 */
-public class Net {
+public class NetAddress {
     private String netName;         //网点名
     private String netTel;          //网点电话
     private String netAddr;         //网点地址

@@ -50,8 +50,10 @@ public class MyServletDispather extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProcessHandler handler = new ProcessHandler(request, response);
         handler.setMode(ProcessHandlerMode.READ_MODE);
-        String content = handler.getUserDirectiveContent();
-        handler.pushToUser(content);
+        String username = handler.getUserName();
+        String content = handler.getUserDirective();
+        handler.setMode(ProcessHandlerMode.WRITE_MODE);
+        handler.pushToUser(username, content);
 
         /*if (!handler.switchServletAndDispatch())
         {

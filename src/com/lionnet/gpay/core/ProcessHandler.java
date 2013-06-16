@@ -162,7 +162,7 @@ public class ProcessHandler {
 	}
 	
 	/* 获取用户的指令 */
-    private String getUserDirective()
+    public String getUserDirective()
 	{
 		return getMessageByNodeName("Content");
 	}
@@ -195,7 +195,7 @@ public class ProcessHandler {
         PrintWriter writer;
         try {
             writer = response.getWriter();
-            writer.print(new String(textMessage.getBytes("ISO-8859-1"),"UTF-8"));
+            writer.print(textMessage);
             writer.flush();
             return true;
         } catch (IOException e) {
@@ -215,7 +215,7 @@ public class ProcessHandler {
 		InputStream bin = new BufferedInputStream(in);
 		byte[] buf = new byte[1024];
 		StringBuilder sb = new StringBuilder("");
-		while (bin.read(buf) != 1)
+		while (bin.read(buf) != -1)
 			sb.append(new String(buf));	//必须new一个String，否则使用byte.toString()方法会出现编码问题，造成结果不一致
 		return sb.toString();
 	}

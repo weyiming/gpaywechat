@@ -191,11 +191,11 @@ public class ProcessHandler {
         String textMessage = xmlController.creatTextMessage(openID, content);
 
         // 输出给用户
-        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter writer;
         try {
             writer = response.getWriter();
-            writer.print(textMessage);
+            writer.print(new String(textMessage.getBytes("ISO-8859-1"),"UTF-8"));
             writer.flush();
             return true;
         } catch (IOException e) {

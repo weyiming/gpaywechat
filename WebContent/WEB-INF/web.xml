@@ -9,4 +9,94 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+    
+    <servlet>
+        <servlet-name>myServletDispatcher</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.MyServletDispather</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myServletDispatcher</servlet-name>
+        <url-pattern>/MyServletDispatcher</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>weatherAsker</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.WeatherAsker</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>weatherAsker</servlet-name>
+        <url-pattern>/WeatherAsker</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>help</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.Help</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>help</servlet-name>
+        <url-pattern>/Help</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>accountBind</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.AccountBind</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>accountBind</servlet-name>
+        <url-pattern>/AccountBind</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>accountBindLink</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.AccountBindLink</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>accountBindLink</servlet-name>
+        <url-pattern>/AccountBindLink</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>advice</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.Advice</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>advice</servlet-name>
+        <url-pattern>/Advice</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>balanceQuery</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.BalanceQuery</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>balanceQuery</servlet-name>
+        <url-pattern>/BalanceQuery</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>detailQuery</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.DetailQuery</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>detailQuery</servlet-name>
+        <url-pattern>/DetailQuery</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>merchantsGetter</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.MerchantsGetter</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>merchantsGetter</servlet-name>
+        <url-pattern>/MerchantsGetter</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>netsGetter</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.NetsGetter</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>netsGetter</servlet-name>
+        <url-pattern>/NetsGetter</url-pattern>
+    </servlet-mapping>
 </web-app>

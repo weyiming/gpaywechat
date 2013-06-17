@@ -194,5 +194,6 @@ public class MyXMLController {
         {
             System.out.println(merchant.getArea());
         }*/
+        MyXMLController my = new MyXMLController();
 	}
 }

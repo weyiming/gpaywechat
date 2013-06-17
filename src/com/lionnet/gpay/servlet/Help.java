@@ -21,7 +21,6 @@ public class Help extends HttpServlet {
      */
     public Help() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -37,7 +36,7 @@ public class Help extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ProcessHandler handler = new ProcessHandler(request, response);
         handler.setMode(ProcessHandlerMode.WRITE_MODE);
-        handler.pushToUser(Contants.HELP_TEXT);
+        handler.pushToUser((String)request.getAttribute("userName"), Contants.HELP_TEXT);
     }
 
 }

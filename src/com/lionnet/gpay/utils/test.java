@@ -25,18 +25,21 @@ public class test {
                 "<xml>" +
                 "<FromUserName>weiyiming1</FromUserName>" +
                 "<ToUserName>weiyiming2</ToUserName>" +
-                "<Content>帮助</Content>" +
+                "<Content>天气#杭州</Content>" +
                 "</xml>",
                 "UTF-8");
         httpPost.setEntity(xmlEntity);
         HttpResponse response = httpClient.execute(httpPost);
         HttpEntity resEntity = response.getEntity();
+        /*HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet("http://php.weather.sina.com.cn/xml.php?city="+ URLEncoder.encode("杭州", "gb2312")+"&password=DJOYnieT8234jlsK&day=0");
+        HttpResponse httpResponse = httpClient.execute(httpGet);
+        HttpEntity httpEntity = httpResponse.getEntity();*/
         InputStreamReader reader = new InputStreamReader(resEntity.getContent(), "UTF-8");
         char[] buff = new char[1024];
-        int length = 0, i = 0;
+        int length = 0;
         while ((length = reader.read(buff)) != -1) {
-            i++;
-            System.out.println(i + ":" + new String(buff, 0, length));
+            System.out.println(new String(buff, 0, length));
         }
         httpClient.getConnectionManager().shutdown();
     }

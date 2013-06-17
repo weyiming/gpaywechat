@@ -2,6 +2,7 @@ package com.lionnet.gpay.core;
 
 import com.lionnet.gpay.utils.Contants;
 import com.lionnet.gpay.utils.MyXMLController;
+import org.apache.http.client.HttpClient;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,8 @@ public class ProcessHandler {
 	private String servletToGo;
 	private MyXMLController xmlController;
 	private URL url;
-	
+    private HttpClient httpClient;
+
 	/* 构造函数用于转发请求，也可读取request输入流中的内容,并向reaponse中输出流写入内容 */
     public ProcessHandler(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -40,7 +42,7 @@ public class ProcessHandler {
     public boolean switchServletAndDispatch()
     {
         setMode(ProcessHandlerMode.READ_MODE);
-        String userDirective = getUserDirective();
+        String userDirective = getUserDirectiveFromXml();
 
 //        以下代码适用于java7，低于7的版本switch语句中无法使用String类型
 //		switch(userDirective)
@@ -98,6 +100,10 @@ public class ProcessHandler {
             return false;
 
 		/* 派发到指定的servlet */
+
+        if (userDirective.contains("#"))
+            request.setAttribute("content", (userDirective.split("#"))[1]);
+        request.setAttribute("userName", getUserName());
         try {
             request.getRequestDispatcher(servletToGo).forward(request, response);
         } catch (ServletException e) {
@@ -135,7 +141,9 @@ public class ProcessHandler {
     public void setURLMode(String url)
 	{
 		try {
-			this.url = new URL(url);
+            if (xmlController == null)
+                xmlController = new MyXMLController();
+            this.url = new URL(url);
 			xmlController.initInputDocument(this.url.openStream());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -162,7 +170,7 @@ public class ProcessHandler {
 	}
 	
 	/* 获取用户的指令 */
-    public String getUserDirective()
+    private String getUserDirectiveFromXml()
 	{
 		return getMessageByNodeName("Content");
 	}
@@ -170,12 +178,7 @@ public class ProcessHandler {
     /* 获取用户指令包含的内容，例如天气后跟的城市名，余额后跟的想要查询的账户号 */
 	public String getUserDirectiveContent()
 	{
-		String fullDirective = getUserDirective();
-		if (fullDirective.contains("#"))
-		{
-			return fullDirective.split("#")[1];
-		}
-		return "";
+		return (String)request.getAttribute("content");
 	}
 
     /* 获取用户的username，也是openID */

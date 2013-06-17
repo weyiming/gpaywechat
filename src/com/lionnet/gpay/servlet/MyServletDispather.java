@@ -2,6 +2,7 @@ package com.lionnet.gpay.servlet;
 
 import com.lionnet.gpay.core.ProcessHandler;
 import com.lionnet.gpay.core.ProcessHandlerMode;
+import com.lionnet.gpay.utils.Contants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -48,17 +49,19 @@ public class MyServletDispather extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProcessHandler handler = new ProcessHandler(request, response);
-        handler.setMode(ProcessHandlerMode.READ_MODE);
+        request.setAttribute("111","sb");
+        ProcessHandler handler = new ProcessHandler(request, response);
+
+        /*handler.setMode(ProcessHandlerMode.READ_MODE);
         String username = handler.getUserName();
         String content = handler.getUserDirective();
         handler.setMode(ProcessHandlerMode.WRITE_MODE);
-        handler.pushToUser(username, content);
-
-        /*if (!handler.switchServletAndDispatch())
+        handler.pushToUser(username, content);*/
+        boolean ifDispatch = handler.switchServletAndDispatch();
+        if (!ifDispatch)
         {
             handler.setMode(ProcessHandlerMode.WRITE_MODE);
             handler.pushToUser(Contants.UNKNOW_DIRECTIVE_ERROR + Contants.HELP_TEXT);
-        }*/
+        }
 	}
 }

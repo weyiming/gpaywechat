@@ -99,4 +99,14 @@
         <servlet-name>netsGetter</servlet-name>
         <url-pattern>/NetsGetter</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>accountUnbound</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.AccountUnbound</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>accountUnbound</servlet-name>
+        <url-pattern>/AccountUnbound</url-pattern>
+    </servlet-mapping>
 </web-app>

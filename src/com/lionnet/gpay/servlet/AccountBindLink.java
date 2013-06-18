@@ -35,11 +35,11 @@ public class AccountBindLink extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProcessHandler handler = new ProcessHandler(request, response);
-		handler.setMode(ProcessHandlerMode.READ_MODE);
-		String userName = handler.getUserName();
-		String content = "请使用以下链接绑定您的微信账号和智惠支付账号：http://xxxxx?openID=" + userName;
+		//handler.setMode(ProcessHandlerMode.READ_MODE);
+		String userName = (String)request.getAttribute("userName");
+		String content = "请使用以下链接绑定您的微信账号和智惠支付账号：http://223.4.2.172/AccountBind?openID=" + userName;
 		handler.setMode(ProcessHandlerMode.WRITE_MODE);
-		handler.pushToUser(content);
+		handler.pushToUser(userName, content);
 	}
 
 }

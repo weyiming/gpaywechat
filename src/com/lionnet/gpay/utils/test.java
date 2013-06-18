@@ -19,13 +19,13 @@ import java.io.InputStreamReader;
 public class test {
     public static void main(String[] args) throws IOException {
         DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/MyServletDispatcher");
+        HttpPost httpPost = new HttpPost("http://223.4.2.172//MyServletDispatcher");
         httpPost.addHeader("Content-Type", "text/xml");
         StringEntity xmlEntity = new StringEntity(
                 "<xml>" +
                 "<FromUserName>weiyiming1</FromUserName>" +
                 "<ToUserName>weiyiming2</ToUserName>" +
-                "<Content>天气#杭州</Content>" +
+                "<Content>帮助</Content>" +
                 "</xml>",
                 "UTF-8");
         httpPost.setEntity(xmlEntity);

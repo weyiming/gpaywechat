@@ -36,13 +36,10 @@ public class WeatherAsker extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getAttribute("111"));
         ProcessHandler handler = new ProcessHandler(request, response);
 		//handler.setMode(ProcessHandlerMode.READ_MODE);
 		String city = (String)request.getAttribute("content");
         String openID = (String)request.getAttribute("userName");
-        System.out.println(city + openID);
-        System.out.println(URLEncoder.encode(city, "gb2312"));
 		String content = getWeather(city, handler);
 		handler.setMode(ProcessHandlerMode.WRITE_MODE);
 		handler.pushToUser(openID, content);

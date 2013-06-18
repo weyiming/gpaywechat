@@ -257,6 +257,8 @@ public class ProcessHandler {
         xmlController.appendMD5(checksum);
 		String postTextAfterEncrypt = EncryptionHandler.encoder(xmlController.XMLToString());
 
+        System.out.println(xmlController.XMLToString());
+        System.out.println(postTextAfterEncrypt);
 		try {
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			conn.setDoOutput(true);
@@ -266,6 +268,7 @@ public class ProcessHandler {
 			writer.flush();
 
 			String textFromConn = getStringFromConn(conn.getInputStream());
+            System.out.println(textFromConn);
 			xmlController.initInputDocument(EncryptionHandler.decoder(textFromConn));
 		} catch (IOException e) {
 			e.printStackTrace();

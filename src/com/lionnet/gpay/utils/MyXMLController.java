@@ -9,6 +9,7 @@ import org.dom4j.io.SAXReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 /* 操作xml文件辅助类，读写和生成xml操作使用DOM4J，xml转java对象使用XStream */
 public class MyXMLController {
@@ -33,11 +34,13 @@ public class MyXMLController {
 	{
 		reader = new SAXReader();
 		try {
-			document = reader.read(new ByteArrayInputStream(in.getBytes()));
+			document = reader.read(new ByteArrayInputStream(in.getBytes("utf-8")));
 		} catch (DocumentException e) {
 			e.printStackTrace();
-		}
-	}
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
 	
 	/* 初始化无输入源文档，用以输出，自建根元素为xml的文档，并取得根元素 */
 	public void initOutputDocument()
@@ -78,7 +81,7 @@ public class MyXMLController {
 	{
         createOpenIDAndGpayAccountMessage(openID, gpayAccount);
 		
-		Element gpayPasswordElement = root.addElement("binklock");
+		Element gpayPasswordElement = root.addElement("pinblock");
 		gpayPasswordElement.addText(pinblock);
 	}
 

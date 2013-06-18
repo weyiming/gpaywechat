@@ -1,12 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+         pageEncoding="UTF-8"%>
+<%@ include file="include/meta.html" %>
+<title>微信智惠卡绑定</title>
+<%@ include file="include/header.html" %>
+<div id="label">
+    <span>账户绑定</span>
+</div>
+<div id="main">
+    <div class="signin">
+        <div id="bindImg"></div>
+        <form action="/NetsGetter" method="get">
+            <input type="hidden" name="openID" value="${openID}"/>
+            <ul>
+                <li>智慧支付账户：<input type="text" name="gpayAccount"/></li>
+                <li>智慧支付密码：<input type="password" name="gpayPassword"/></li>
+                <li><input type="submit" value="绑  定"/></li>
+            </ul>
+        </form>
+    </div>
+</div>
+<jsp:include page="include/footer.html"/>

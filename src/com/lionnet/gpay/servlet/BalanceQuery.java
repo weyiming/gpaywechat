@@ -39,9 +39,9 @@ public class BalanceQuery extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ProcessHandler handler = new ProcessHandler(request, response);
-        handler.setMode(ProcessHandlerMode.READ_MODE);
-        String openID = handler.getUserName();
-        String gpayAccount = handler.getUserDirectiveContent();
+        //handler.setMode(ProcessHandlerMode.READ_MODE);
+        String openID = (String) request.getAttribute("userName");
+        String gpayAccount = (String) request.getAttribute("content");
 
         /* 向北京服务器发送查询xml报文 */
         handler.setEncryptionURLMode(Contants.BALANCE_URL);
@@ -66,8 +66,8 @@ public class BalanceQuery extends HttpServlet {
         String content = "";
         for (AccountBalance accountBalance:accountBalanceList)
         {
-            content += "您账号为" + accountBalance.getGpayAccount() +
-                    "的账户余额为：" + accountBalance.getBalance() + "元\n" +
+            content += "您卡号为" + accountBalance.getGpayAccount() +
+                    "的智慧卡余额为：" + accountBalance.getBalance() + "元\n" +
                     "查询时间：" + accountBalance.getQueryTime() + "\n";
         }
 

@@ -4,6 +4,8 @@ import com.chinagpay.cgp.merch.util.PinBlock;
 import com.chinagpay.mer.bean.DigestUtil;
 import com.chinagpay.mer.bean.ProcessMessage;
 
+import java.io.UnsupportedEncodingException;
+
 /* 	
  * 	传送数据时的加密流程
  *	1.原始报文（<xml><bindResult>1</bindResult></xml>）
@@ -85,6 +87,13 @@ public class EncryptionHandler {
 	
 	public static String decoder(String originalText)
     {
-        return new String(ProcessMessage.Base64Decode(originalText));
+        String result = new String(ProcessMessage.Base64Decode(originalText));
+        System.out.println(result);
+        return result.trim();
 	}
+
+    public static void main(String [] args) throws UnsupportedEncodingException {
+        //System.out.println(EncryptionHandler.pinBlock("1111111111111111", "222222"));
+        System.out.println(new String(ProcessMessage.Base64Decode("PHhtbD48b3BlbklEPm9DRGFOam9TU242bVZQSTVzRlJBV1NXSXFRaHc8L29wZW5JRD48Z3BheUFjY291bnQ+OTUxNjgyMDAwMDAwMDAxMzwvZ3BheUFjY291bnQ+PHBpbmJsb2NrPjdCMUMwNDM3QTY4MEQ3MzQ8L3BpbmJsb2NrPjxtZDU+Njg3N2JhZTA5YTVlYmE0OTc4ZWI1NTk2OTNhNWRhNmI8L21kNT48L3htbD4=")));
+    }
 }

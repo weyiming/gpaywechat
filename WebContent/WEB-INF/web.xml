@@ -109,4 +109,14 @@
         <servlet-name>accountUnbound</servlet-name>
         <url-pattern>/AccountUnbound</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>advicePost</servlet-name>
+        <servlet-class>com.lionnet.gpay.servlet.AdvicePost</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>advicePost</servlet-name>
+        <url-pattern>/AdvicePost</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -11,6 +11,6 @@
     <title></title>
 </head>
 <body>
-    hello!
+    <jsp:forward page="view/accountBind.jsp" />
 </body>
 </html>

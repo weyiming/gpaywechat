@@ -7,7 +7,6 @@ html, body {
 	margin:0 auto;
 	padding: 0;
 	text-decoration: none;
-	width:320px
 }
 ol, ul {
 	list-style: none outside none;
@@ -26,12 +25,14 @@ h3 {font-size: 18px;  margin:0; padding:0;}
 .content p {color: #666666;font-size: 14px; line-height: 1.5; margin:0; padding:0;}
 .content img {height: auto;max-width: 100%;border: 0 none;}
 
-#footer{color:#666666;font-size:8px;text-align:center;margin:5px 0 0 0;padding:5px 0;border-top-style:solid;border-top-width:2px;border-top-color:#c8101b;}
+#footer{color:#666666;font-size:11px;text-align:center;margin:5px 0 0 0;padding:5px 0;border-top-style:solid;border-top-width:2px;border-top-color:#c8101b;}
 #header{background-color:#ffffff;padding:5px 0 0 0;}
 #logo{height:60px;background-image:url(../../resources/img/logo.jpg);background-repeat:no-repeat;}
 #label{background-color:#c8101b;padding:5px 5px;}
 #label span{margin:0px 10px;color:#ffffff;font-size:16px;}
-#main{text-align:center;margin:10px auto;padding:5px 0;width:96%;border:1px solid #dddddd;background-color:#ffffff;border-radius:0.4em;}
+#main{margin:10px auto;padding:5px 0;width:96%;border:1px solid #dddddd;background-color:#ffffff;border-radius:0.4em;}
 .signin{font-size:small}
 .signin ul li{margin:10px auto;display:block;}
-#bindImg{margin:15px 0 10px 100px;height:60px;background-image:url(../../resources/img/bind.png);background-repeat:no-repeat;}
+.maincontent{padding: 5px 15px}
+.mt10{margin-top: 10px}
+#bindImg{margin:10px auto;height:60px;width:160px;background-image:url(../../resources/img/bind.png);background-repeat:no-repeat;}

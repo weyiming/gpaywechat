@@ -8,7 +8,7 @@ public class Contants
     /* 向北京通信所用url */
     private static final String HOST = "http://124.207.79.71/WeChat/";
     public static final String BIND_URL = HOST + "accountBindServlet";
-    public static final String BALANCE_URL = HOST + "accountBalanceServlet";
+    public static final String BALANCE_URL = HOST + "accountBlanceServlet";
     public static final String DETAIL_URL = HOST + "transDetailServlet";
     public static final String BJ_MERCHSNT_URL = HOST + "bjMerchantServlet";
     public static final String SH_MERCHSNT_URL = HOST + "shMerchantServlet";

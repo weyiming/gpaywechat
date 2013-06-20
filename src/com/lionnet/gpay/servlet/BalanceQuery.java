@@ -52,6 +52,7 @@ public class BalanceQuery extends HttpServlet {
         {
             handler.setMode(ProcessHandlerMode.WRITE_MODE);
             handler.pushToUser(openID, Contants.SERVLET_ERROR);
+            return;
         }
 
         /* 整理返回的结果集返回给用户 */

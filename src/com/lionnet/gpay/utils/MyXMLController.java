@@ -66,7 +66,8 @@ public class MyXMLController {
     /* 移除指定的element */
     public boolean removeElement(String name)
     {
-        return document.remove(document.selectSingleNode(name));
+        root = document.getRootElement();
+        return root.remove(root.selectSingleNode("//" + name));
     }
 
     /* 在xml报文中加入md5校验码 */

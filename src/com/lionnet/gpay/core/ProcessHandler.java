@@ -219,7 +219,7 @@ public class ProcessHandler {
 		byte[] buf = new byte[1024];
 		StringBuilder sb = new StringBuilder("");
 		while (bin.read(buf) != -1)
-			sb.append(new String(buf));	//必须new一个String，否则使用byte.toString()方法会出现编码问题，造成结果不一致
+			sb.append(new String(buf, "utf-8"));	//必须new一个String，否则使用byte.toString()方法会出现编码问题，造成结果不一致
 		return sb.toString();
 	}
 	
@@ -268,7 +268,7 @@ public class ProcessHandler {
 			writer.flush();
 
 			String textFromConn = getStringFromConn(conn.getInputStream());
-            System.out.println(textFromConn);
+            System.out.println(textFromConn + "2222");
 			xmlController.initInputDocument(EncryptionHandler.decoder(textFromConn));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -287,13 +287,26 @@ public class ProcessHandler {
     public boolean checkFrom()
     {
         String md5 = xmlController.getNodeContent("md5");
-        xmlController.removeElement("md5");
-        return md5.equals(EncryptionHandler.getChecksum(xmlController.XMLToString()));
+        System.out.println(md5);
+        System.out.println(xmlController.removeElement("md5"));
+        System.out.println(xmlController.XMLToString());
+        System.out.println(EncryptionHandler.getChecksum(xmlController.XMLToString()));
+        if (!md5.equals(EncryptionHandler.getChecksum(xmlController.XMLToString())))
+        {
+            System.out.println("checkFrom false");
+            return false;
+        }
+        return true;
     }
 
     /* 检查是否是错误报文 */
     public boolean isError()
     {
-        return xmlController.isHas("errorCode");
+        if (xmlController.isHas("errorCode"))
+        {
+            System.out.println("iserror true");
+            return true;
+        }
+        return false;
     }
 }

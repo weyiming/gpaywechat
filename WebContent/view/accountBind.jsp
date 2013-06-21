@@ -8,10 +8,10 @@
 </div>
 <div id="main">
 	<div class="maincontent">
-	<div id="bindImg"></div>
+	<div class="contentImg bindImg"></div>
 	<form action="/AccountBind" method="post">
         <input type="hidden" name="openID" value="${openID}"/>
-        <div class="mt10">
+        <div class="mt5">
 	        <label for="gpayAccount">智慧卡卡号：</label>
             <input type="text" name="gpayAccount" id="gpayAccount" placeholder="16位卡号"/>
         </div>

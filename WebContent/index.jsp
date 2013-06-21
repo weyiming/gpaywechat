@@ -11,6 +11,6 @@
     <title></title>
 </head>
 <body>
-    <jsp:forward page="view/accountBind.jsp" />
+    <jsp:forward page="view/showNets.jsp" />
 </body>
 </html>

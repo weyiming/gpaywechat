@@ -220,6 +220,7 @@ public class ProcessHandler {
 		StringBuilder sb = new StringBuilder("");
 		while (bin.read(buf) != -1)
 			sb.append(new String(buf, "utf-8"));	//必须new一个String，否则使用byte.toString()方法会出现编码问题，造成结果不一致
+        bin.close();
 		return sb.toString();
 	}
 	
@@ -245,6 +246,14 @@ public class ProcessHandler {
 		postAndInitInput(url);
 	}
 
+    /* advice报文送往北京服务器 */
+    public void postToServer(String openID, String title, String text, String phone)
+    {
+        xmlController.initOutputDocument();
+        xmlController.createAdviceMessage(openID, title, text, phone);
+        postWithoutInput(url);
+    }
+
     /*
         提取了公共的操作，
         1、进行校验码计算；
@@ -257,10 +266,9 @@ public class ProcessHandler {
         xmlController.appendMD5(checksum);
 		String postTextAfterEncrypt = EncryptionHandler.encoder(xmlController.XMLToString());
 
-        System.out.println(xmlController.XMLToString());
-        System.out.println(postTextAfterEncrypt);
-		try {
-			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        HttpURLConnection conn = null;
+        try {
+			conn = (HttpURLConnection)url.openConnection();
 			conn.setDoOutput(true);
 			conn.connect();
 			PrintWriter writer = new PrintWriter(conn.getOutputStream());
@@ -268,12 +276,35 @@ public class ProcessHandler {
 			writer.flush();
 
 			String textFromConn = getStringFromConn(conn.getInputStream());
-            System.out.println(textFromConn + "2222");
 			xmlController.initInputDocument(EncryptionHandler.decoder(textFromConn));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
+		} finally {
+            conn.disconnect();
+        }
+    }
+
+    /* 送往无输入流的url */
+    private void postWithoutInput(URL url)
+    {
+        String checksum = EncryptionHandler.getChecksum(xmlController.XMLToString());
+        xmlController.appendMD5(checksum);
+        String postTextAfterEncrypt = EncryptionHandler.encoder(xmlController.XMLToString());
+
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection)url.openConnection();
+            conn.setDoOutput(true);
+            conn.connect();
+            PrintWriter writer = new PrintWriter(conn.getOutputStream());
+            writer.write(postTextAfterEncrypt);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            conn.disconnect();
+        }
+    }
 
     public Object getResult(String lstTag, String tag, Class lstClazz, Class clazz)
     {

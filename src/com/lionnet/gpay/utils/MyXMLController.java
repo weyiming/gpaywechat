@@ -117,7 +117,23 @@ public class MyXMLController {
         Element gpayAccountElement = root.addElement("gpayAccount");
         gpayAccountElement.addText(gpayAccount);
 	}
-	
+
+    /* 创建投诉消息 */
+    public void createAdviceMessage(String openID, String title, String text, String phone)
+    {
+        Element openIDElement = root.addElement("openID");
+        openIDElement.addText(openID);
+
+        Element titleElement = root.addElement("title");
+        titleElement.addText(title);
+
+        Element textElement = root.addElement("text");
+        textElement.addText(text);
+
+        Element phoneElement = root.addElement("phone");
+        phoneElement.addText(phone);
+    }
+
 	/* 创建文本回复消息 */
 	public String creatTextMessage(String toUserName, String content)
 	{

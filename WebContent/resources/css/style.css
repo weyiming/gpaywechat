@@ -13,6 +13,25 @@ ol, ul {
 	margin:0;
 	padding: 0;
 }
+/*li {border-bottom:1px solid #dddddd;padding: 10px 15px;}
+li.last{border-bottom: 0px;}
+li:active {
+    background:#f5f5f5;
+    border-top:1px solid #f5f5f5;
+    border-left:1px solid #f5f5f5;
+    border-right:1px solid #f5f5f5;
+    font-weight:bold;
+    cursor:pointer;
+    text-decoration:none;
+}
+.icon {
+    float: right;
+    height: 14px;
+    width: 14px;
+    background:url(../img/jiantou.png) no-repeat 0 0 ;
+    background-size: 14px 14px;
+}*/
+.center{margin: 0 auto;width: 98%;}
 h1, h2, h3, h4, h5, h6 {
 	font-size:100%;
 	/*font-weight:normal;*/
@@ -20,19 +39,18 @@ h1, h2, h3, h4, h5, h6 {
 h2{ font-size:16px;}
 h3 {font-size: 18px;  margin:0; padding:0;}
 .clr{ clear:both}
-.marginb { display: block;margin-bottom: 15px;}
-.content {margin: 10px; text-decoration: none; word-wrap: break-word;}
-.content p {color: #666666;font-size: 14px; line-height: 1.5; margin:0; padding:0;}
-.content img {height: auto;max-width: 100%;border: 0 none;}
 
 #footer{color:#666666;font-size:11px;text-align:center;margin:5px 0 0 0;padding:5px 0;border-top-style:solid;border-top-width:2px;border-top-color:#c8101b;}
 #header{background-color:#ffffff;padding:5px 0 0 0;}
 #logo{height:60px;background-image:url(../../resources/img/logo.jpg);background-repeat:no-repeat;}
 #label{background-color:#c8101b;padding:5px 5px;}
 #label span{margin:0px 10px;color:#ffffff;font-size:16px;}
-#main{margin:10px auto;padding:5px 0;width:96%;border:1px solid #dddddd;background-color:#ffffff;border-radius:0.4em;}
-.signin{font-size:small}
-.signin ul li{margin:10px auto;display:block;}
-.maincontent{padding: 5px 15px}
+#main{margin:10px auto;padding:5px 0;width:96%;}
+.maincontent{padding: 5px 15px;border:1px solid #dddddd;background-color:#ffffff;border-radius:0.4em;}
+.mt5{margin-top: 5px}
 .mt10{margin-top: 10px}
-#bindImg{margin:10px auto;height:60px;width:160px;background-image:url(../../resources/img/bind.png);background-repeat:no-repeat;}
+.contentImg{margin:5px auto;height:60px;background-repeat:no-repeat;}
+.bindImg{width:160px;background-image:url(../img/bind.png);}
+.adviceImg{width:48px;background-image:url(../img/advice.png);}
+
+

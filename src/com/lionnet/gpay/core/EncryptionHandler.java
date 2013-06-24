@@ -93,7 +93,6 @@ public class EncryptionHandler {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        System.out.println(result);
         return result.trim();
 	}
 

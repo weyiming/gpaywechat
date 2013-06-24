@@ -23,7 +23,7 @@ public class AdvicePost extends HttpServlet {
         String title = request.getParameter("title");
         String text = request.getParameter("text");
         String phone = request.getParameter("phone");
-        handler.setEncryptionURLMode(Contants.ADVICE_URL);
+        handler.setEncryptionURLMode(Contants.getUrlProperty(this, "ADVICE_URL"));
         handler.postToServer(openID, title, text, phone);
 
         request.setAttribute("openID", openID);

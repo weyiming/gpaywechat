@@ -1,11 +1,27 @@
 package com.lionnet.gpay.utils;
 
+import javax.servlet.http.HttpServlet;
+import java.io.IOException;
+import java.util.Properties;
+
 public class Contants
 {
+    private static final Properties pro = new Properties();
     /* 智惠支付微信公共账户号 */
 	public static final String DEVELOPER_WECHAT_ACCOUNT = "chinagoldenpay";
 
     /* 向北京通信所用url */
+    public static String getUrlProperty(HttpServlet httpServlet, String key)
+    {
+        try {
+            pro.load(httpServlet.getServletContext().getResourceAsStream("/WEB-INF/config/url.properties"));
+            return pro.getProperty(key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private static final String HOST = "http://124.207.79.71/WeChat/";
     public static final String BIND_URL = HOST + "accountBindServlet";
     public static final String BALANCE_URL = HOST + "accountBlanceServlet";

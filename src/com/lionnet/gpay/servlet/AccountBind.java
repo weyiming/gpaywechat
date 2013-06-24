@@ -41,7 +41,7 @@ public class AccountBind extends HttpServlet {
 
 		/* 向北京智惠支付服务器递交绑定请求 */
 		ProcessHandler handler = new ProcessHandler(request, response);
-		handler.setEncryptionURLMode(Contants.BIND_URL);    //此url为绑定账户
+		handler.setEncryptionURLMode(Contants.getUrlProperty(this, "BIND_URL"));    //此url为绑定账户
 		handler.postToServer(openID, gpayAccount, gpayPassword);
 
 		/* 从服务器取得绑定结果 */

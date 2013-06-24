@@ -43,8 +43,9 @@ public class BalanceQuery extends HttpServlet {
         String openID = (String) request.getAttribute("userName");
         String gpayAccount = (String) request.getAttribute("content");
 
+
         /* 向北京服务器发送查询xml报文 */
-        handler.setEncryptionURLMode(Contants.BALANCE_URL);
+        handler.setEncryptionURLMode(Contants.getUrlProperty(this, "BALANCE_URL"));
         handler.postToServer(openID, gpayAccount);
 
         /* 错误检查，若非北京发来的消息或者返回的是错误报文则返回错误信息给用户 */

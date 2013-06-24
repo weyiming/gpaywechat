@@ -102,8 +102,12 @@ public class ProcessHandler {
 		/* 派发到指定的servlet */
 
         if (userDirective.contains("#"))
+        {
             request.setAttribute("content", (userDirective.split("#"))[1]);
+            /*System.out.println((userDirective.split("#"))[1]);*/
+        }
         request.setAttribute("userName", getUserName());
+        /*System.out.println(getUserName());*/
         try {
             request.getRequestDispatcher(servletToGo).forward(request, response);
         } catch (ServletException e) {
@@ -246,6 +250,22 @@ public class ProcessHandler {
 		postAndInitInput(url);
 	}
 
+    /* 用于特约商户查询 */
+    public void postToServer(Integer page, String type, String area)
+    {
+        xmlController.initOutputDocument();
+        xmlController.createMerchantMessage(page, type, area);
+        postAndInitInput(url);
+    }
+
+    /* 用于购卡网点查询 */
+    public void postToServer(Integer page)
+    {
+        xmlController.initOutputDocument();
+        xmlController.createPageMessage(page);
+        postAndInitInput(url);
+    }
+
     /* advice报文送往北京服务器 */
     public void postToServer(String openID, String title, String text, String phone)
     {
@@ -264,6 +284,7 @@ public class ProcessHandler {
 	{
         String checksum = EncryptionHandler.getChecksum(xmlController.XMLToString());
         xmlController.appendMD5(checksum);
+        System.out.println(xmlController.XMLToString());
 		String postTextAfterEncrypt = EncryptionHandler.encoder(xmlController.XMLToString());
 
         HttpURLConnection conn = null;
@@ -318,10 +339,11 @@ public class ProcessHandler {
     public boolean checkFrom()
     {
         String md5 = xmlController.getNodeContent("md5");
-        System.out.println(md5);
+        /*System.out.println(md5);
         System.out.println(xmlController.removeElement("md5"));
         System.out.println(xmlController.XMLToString());
-        System.out.println(EncryptionHandler.getChecksum(xmlController.XMLToString()));
+        System.out.println(EncryptionHandler.getChecksum(xmlController.XMLToString()));*/
+        xmlController.removeElement("md5");
         if (!md5.equals(EncryptionHandler.getChecksum(xmlController.XMLToString())))
         {
             System.out.println("checkFrom false");

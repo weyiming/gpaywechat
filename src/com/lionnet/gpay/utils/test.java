@@ -18,17 +18,18 @@ import java.io.InputStreamReader;
  */
 public class test {
     public static void main(String[] args) throws IOException {
+       /* openID=oCDaNjoSSn6mVPI5sFRAWSWIqQhw*/
         DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("http://localhost:8080/DetailQuery?userName=oCDaNjoSSn6mVPI5sFRAWSWIqQhw&content=9516820000000013");
+        HttpPost httpPost = new HttpPost("http://localhost:8080/MyServletDispatcher");
         httpPost.addHeader("Content-Type", "text/xml");
         StringEntity xmlEntity = new StringEntity(
                 "<xml>" +
-                "<FromUserName>gpaywechat</FromUserName>" +
+                "<FromUserName>oCDaNjoSSn6mVPI5sFRAWSWIqQhw</FromUserName>" +
                 "<ToUserName>oCDaNjoSSn6mVPI5sFRAWSWIqQhw</ToUserName>" +
-                "<Content>帮助</Content>" +
+                "<Content>网点</Content>" +
                 "</xml>",
                 "UTF-8");
-        //httpPost.setEntity(xmlEntity);
+        httpPost.setEntity(xmlEntity);
         HttpResponse response = httpClient.execute(httpPost);
         HttpEntity resEntity = response.getEntity();
         /*HttpClient httpClient = new DefaultHttpClient();

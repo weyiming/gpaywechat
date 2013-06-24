@@ -11,6 +11,6 @@
     <title></title>
 </head>
 <body>
-    <jsp:forward page="view/showNets.jsp" />
+    hello！gpaywechat！这是中文显示！<jsp:forward page="view/showNets.jsp" />
 </body>
 </html>

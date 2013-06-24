@@ -13,8 +13,18 @@ public class NetAddress {
     private String netName;         //网点名
     private String netTel;          //网点电话
     private String netAddr;         //网点地址
-    private String company;         //网点所属公司
+    private String companyName;         //公司名
+    private String company;          //网点所属公司
     private String companyAddr;     //公司地址
+    private String companyTel;      //公司电话
+
+    public String getCompanyTel() {
+        return companyTel;
+    }
+
+    public void setCompanyTel(String companyTel) {
+        this.companyTel = companyTel;
+    }
 
     public String getNetName() {
         return netName;
@@ -46,6 +56,14 @@ public class NetAddress {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getCompanyAddr() {

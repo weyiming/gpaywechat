@@ -2,6 +2,7 @@ package com.lionnet.gpay.servlet;
 
 import com.lionnet.gpay.core.ProcessHandler;
 import com.lionnet.gpay.core.ProcessHandlerMode;
+import com.lionnet.gpay.utils.Contants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +38,8 @@ public class Advice extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ProcessHandler handler = new ProcessHandler(request, response);
         String openID = (String)request.getAttribute("userName");
-        String content = "请点击以下链接进行投诉建议：http://223.4.2.172/Advice?openID=" + openID;
+        String content = "进行投诉建议：" +
+                "<a href=\"" + Contants.getUrlProperty(this, "ADVICE_LINK") + "?openID=" + openID + "\">请点击我</a>";
         handler.setMode(ProcessHandlerMode.WRITE_MODE);
         handler.pushToUser(openID, content);
 

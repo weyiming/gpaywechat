@@ -5,7 +5,7 @@
 <title>微信智惠卡--网点查询</title>
 <%@ include file="include/header.html" %>
 <div id="label">
-    <span>购卡网点</span>
+    <span>网点查询</span>
 </div>
 <div id="main">
     <ul data-role="listview" data-inset="true">
@@ -21,11 +21,24 @@
     </ul>
 </div>
 <div class="center">
-    <p>
-        <a href="#" data-role="button" data-inline="true">上一页</a>
-        <label>第1页/共10页</label>
-        <a href="#" data-role="button" data-inline="true">下一页</a>
-    </p>
+    <script>
+        function goToPage(test)
+        {
+            if (test == 0)
+                $('#pageForm').attr('action', '/NetsGetter?page=' + ($('#currentPage').val() - 1));
+            if (test == 1)
+                $('#pageForm').attr('action', '/NetsGetter?page=' + ($('#currentPage').val() + 1));
 
+            $('#pageForm').submit;
+        }
+    </script>
+    <form id="pageForm" action="/NetsGetter" method="get">
+        <input type="hidden" value="${currentPage}" id="currentPage"/>
+    </form>
+    <p>
+        <a href="#" data-role="button" data-inline="true" onclick="goToPage(0)">上一页</a>
+        <label>第${currentPage}页/共${totalPage}页</label>
+        <a href="#" data-role="button" data-inline="true" onclick="goToPage(1)">下一页</a>
+    </p>
 </div>
 <jsp:include page="include/footer.html"/>

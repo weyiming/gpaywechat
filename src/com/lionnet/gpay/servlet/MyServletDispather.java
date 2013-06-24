@@ -49,7 +49,6 @@ public class MyServletDispather extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("111","sb");
         ProcessHandler handler = new ProcessHandler(request, response);
 
         /*handler.setMode(ProcessHandlerMode.READ_MODE);

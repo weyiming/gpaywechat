@@ -87,9 +87,9 @@ public class MyXMLController {
 	}
 
     /* 创建商户查询xml报文 */
-    public void createMerchantMessage(String openID, String page, String type, String area)
+    public void createMerchantMessage(Integer page, String type, String area)
     {
-        createOpenIDAndPageMessage(openID, page);
+        createPageMessage(page);
 
         Element typeElemnt = root.addElement("type");
         typeElemnt.addText(type);
@@ -98,14 +98,11 @@ public class MyXMLController {
         areaElement.addText(area);
     }
 
-    /* 创建包含openID和page的xml报文，可用于商户查询和网点查询 */
-    public void createOpenIDAndPageMessage(String openID, String page)
+    /* 创建包含page的xml报文，可用于商户查询和网点查询 */
+    public void createPageMessage(Integer page)
     {
-        Element openIDElement = root.addElement("openID");
-        openIDElement.addText(openID);
-
         Element pageElement = root.addElement("page");
-        pageElement.addText(page);
+        pageElement.addText(page.toString());
     }
 
     /* 创建包含openID和gpayAccount的xml报文,可用于账户绑定和余额查询、明显查询 */
@@ -114,8 +111,19 @@ public class MyXMLController {
 		Element openIDElement = root.addElement("openID");
 		openIDElement.addText(openID);
 
-        Element gpayAccountElement = root.addElement("gpayAccount");
-        gpayAccountElement.addText(gpayAccount);
+        if (gpayAccount == null || gpayAccount.equals(""))
+        {
+            //System.out.println("为空");
+            Element gpayAccountElement = root.addElement("gpayAccount");
+            gpayAccountElement.addText("");
+        }
+
+        else
+        {
+            Element gpayAccountElement = root.addElement("gpayAccount");
+        }
+        //System.out.println(gpayAccount);
+        //gpayAccountElement.addText(gpayAccount);
 	}
 
     /* 创建投诉消息 */

@@ -10,13 +10,13 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class NetAddressList {
-    private ArrayList<NetAddress> netAddresseList;
+    private ArrayList<NetAddress> netAddressList;
 
-    public ArrayList<NetAddress> getNetAddresses() {
-        return netAddresseList;
+    public ArrayList<NetAddress> getNetAddressList() {
+        return netAddressList;
     }
 
-    public void setNetAddresses(ArrayList<NetAddress> netAddresseList) {
-        this.netAddresseList = netAddresseList;
+    public void setNetAddressList(ArrayList<NetAddress> netAddressList) {
+        this.netAddressList = netAddressList;
     }
 }

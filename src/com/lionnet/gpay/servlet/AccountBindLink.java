@@ -2,6 +2,7 @@ package com.lionnet.gpay.servlet;
 
 import com.lionnet.gpay.core.ProcessHandler;
 import com.lionnet.gpay.core.ProcessHandlerMode;
+import com.lionnet.gpay.utils.Contants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,10 +37,11 @@ public class AccountBindLink extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProcessHandler handler = new ProcessHandler(request, response);
 		//handler.setMode(ProcessHandlerMode.READ_MODE);
-		String userName = (String)request.getAttribute("userName");
-		String content = "请使用以下链接绑定您的微信账号和智惠支付账号：http://223.4.2.172/AccountBind?openID=" + userName;
+		String openID = (String)request.getAttribute("userName");
+		String content = "绑定您的微信账号和智惠支付账号：" +
+                "<a href=\"" + Contants.getUrlProperty(this, "BIND_LINK") + "?openID=" + openID + "\">请点击我</a>";
 		handler.setMode(ProcessHandlerMode.WRITE_MODE);
-		handler.pushToUser(userName, content);
+		handler.pushToUser(openID, content);
 	}
 
 }

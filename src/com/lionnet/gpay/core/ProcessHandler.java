@@ -2,14 +2,13 @@ package com.lionnet.gpay.core;
 
 import com.lionnet.gpay.utils.Contants;
 import com.lionnet.gpay.utils.MyXMLController;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.client.HttpClient;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -216,18 +215,6 @@ public class ProcessHandler {
 		return pushToUser(getUserName(), content);
 	}
 	
-	/* 从输入流中获取string，在此处为北京服务器的连接中获取，以便进行解码工作 */
-	private String getStringFromConn(InputStream in) throws IOException
-	{
-		InputStream bin = new BufferedInputStream(in);
-		byte[] buf = new byte[1024];
-		StringBuilder sb = new StringBuilder("");
-		while (bin.read(buf) != -1)
-			sb.append(new String(buf, "utf-8"));	//必须new一个String，否则使用byte.toString()方法会出现编码问题，造成结果不一致
-        bin.close();
-		return sb.toString();
-	}
-	
 	/*
 	    以下postToServer()方法采用多态，向北京服务器推送请求的消息，
 	    主要进行了消息的md5校验，然后进行加密传送给北京
@@ -296,7 +283,8 @@ public class ProcessHandler {
 			writer.write(postTextAfterEncrypt);
 			writer.flush();
 
-			String textFromConn = getStringFromConn(conn.getInputStream());
+			String textFromConn = IOUtils.toString(conn.getInputStream());
+            System.out.println(EncryptionHandler.decoder(textFromConn));
 			xmlController.initInputDocument(EncryptionHandler.decoder(textFromConn));
 		} catch (IOException e) {
 			e.printStackTrace();

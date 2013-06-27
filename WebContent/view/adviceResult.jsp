@@ -20,4 +20,4 @@
         </div>
     </div>
 </div>
-<jsp:include page="include/footer.html"/>
+<jsp:include page="include/footer.jsp"/>

@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class MerchantList {
     private ArrayList<Merchant> merchantList;
 
-    public ArrayList<Merchant> getMerchants() {
+    public ArrayList<Merchant> getMerchantList() {
         return merchantList;
     }
 
-    public void setMerchants(ArrayList<Merchant> merchantList) {
+    public void setMerchantList(ArrayList<Merchant> merchantList) {
         this.merchantList = merchantList;
     }
 }

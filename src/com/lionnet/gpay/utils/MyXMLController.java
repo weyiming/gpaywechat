@@ -92,10 +92,19 @@ public class MyXMLController {
         createPageMessage(page);
 
         Element typeElemnt = root.addElement("type");
-        typeElemnt.addText(type);
+
+        if (type == null || type.equals(""))
+        {
+            typeElemnt.addText("");
+        }
+        else
+            typeElemnt.addText(type);
 
         Element areaElement = root.addElement("area");
-        areaElement.addText(area);
+        if (area == null || area.equals(""))
+            areaElement.addText("");
+        else
+            areaElement.addText(area);
     }
 
     /* 创建包含page的xml报文，可用于商户查询和网点查询 */
@@ -111,16 +120,16 @@ public class MyXMLController {
 		Element openIDElement = root.addElement("openID");
 		openIDElement.addText(openID);
 
+        Element gpayAccountElement = root.addElement("gpayAccount");
+
         if (gpayAccount == null || gpayAccount.equals(""))
         {
-            //System.out.println("为空");
-            Element gpayAccountElement = root.addElement("gpayAccount");
             gpayAccountElement.addText("");
         }
 
         else
         {
-            Element gpayAccountElement = root.addElement("gpayAccount");
+            gpayAccountElement.addText(gpayAccount);
         }
         //System.out.println(gpayAccount);
         //gpayAccountElement.addText(gpayAccount);

@@ -8,6 +8,7 @@ import org.apache.http.client.HttpClient;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
@@ -275,14 +276,14 @@ public class ProcessHandler {
 		String postTextAfterEncrypt = EncryptionHandler.encoder(xmlController.XMLToString());
 
         HttpURLConnection conn = null;
+        BufferedOutputStream bos = null;
         try {
 			conn = (HttpURLConnection)url.openConnection();
 			conn.setDoOutput(true);
 			conn.connect();
-			PrintWriter writer = new PrintWriter(conn.getOutputStream());
-			writer.write(postTextAfterEncrypt);
-			writer.flush();
-
+			bos = new BufferedOutputStream(conn.getOutputStream());
+			bos.write(postTextAfterEncrypt.getBytes("utf-8"));
+            bos.close();
 			String textFromConn = IOUtils.toString(conn.getInputStream());
             System.out.println(EncryptionHandler.decoder(textFromConn));
 			xmlController.initInputDocument(EncryptionHandler.decoder(textFromConn));
@@ -290,6 +291,11 @@ public class ProcessHandler {
 			e.printStackTrace();
 		} finally {
             conn.disconnect();
+            try {
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

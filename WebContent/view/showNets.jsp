@@ -8,17 +8,24 @@
     <span>网点查询</span>
 </div>
 <div id="main">
-    <ul data-role="listview" data-inset="true">
-        <li data-role="list-divider">网点列表</li>
+    <div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
         <c:forEach items="${nets}" var="net">
-        <li data-icon="false"><a href="#" onclick="alert('你点击了我！')">
-            <h2>${net.netName}</h2>
-            <p><strong>地址：</strong>${net.netAddr}</p>
-            <p><strong>电话：</strong>${net.netTel}</p>
-            <span class="ui-li-count">详细...</span>
-        </a></li>
+            <div data-role="collapsible">
+                <h2>${net.netName}</h2>
+                <ul data-role="listview">
+                    <li data-icon="false">
+                        <h2>${net.netName}</h2>
+                        <p><strong>网点电话：</strong>${net.netTel}</p>
+                        <p><strong>网点地址：</strong>${net.netAddr}</p>
+                        <p><strong>公司名：</strong>${net.companyName}</p>
+                        <p><strong>所属公司：</strong>${net.company}</p>
+                        <p><strong>公司电话：</strong>${net.companyTel}</p>
+                        <p><strong>公司地址：</strong>${net.companyAddr}</p>
+                    </li>
+                </ul>
+            </div>
         </c:forEach>
-    </ul>
+    </div>
 </div>
 <div class="center">
     <form id="pageForm" action="/NetsGetter" method="get">

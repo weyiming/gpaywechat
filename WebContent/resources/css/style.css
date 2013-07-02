@@ -31,7 +31,7 @@ li:active {
     background:url(../img/jiantou.png) no-repeat 0 0 ;
     background-size: 14px 14px;
 }*/
-.center{margin: 0 auto;width: 98%;}
+.center{margin: 0 auto;width: 98%;text-align: center}
 h1, h2, h3, h4, h5, h6 {
 	font-size:100%;
 	/*font-weight:normal;*/

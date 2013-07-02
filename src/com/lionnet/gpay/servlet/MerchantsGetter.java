@@ -34,19 +34,40 @@ public class MerchantsGetter extends HttpServlet {
         ProcessHandler handler = new ProcessHandler(request, response);
 
         Integer page = 1;
-        if (request.getParameter("page") != null)
-            page = Integer.parseInt(request.getParameter("page"));
 
-        String type = request.getParameter("type");
-        String area = request.getParameter("area");
+        if (request.getParameter("page").equals(""))
+            page = 1;
+        if (request.getParameter("page") != null && !request.getParameter("page").equals(""))
+        {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        String type = new String(request.getParameter("type").getBytes(), "gb2312");
+        if (type.equals("#"))
+            type = "";
+        if (type != null || !type.equals(""))
+            request.setAttribute("type", type);
+        String area = new String(request.getParameter("area").getBytes(), "gb2312");
+        if (area.equals("#"))
+            area = "";
+        if (area != null || !area.equals(""))
+            request.setAttribute("area", area);
         String city = request.getParameter("city");
+
+        if (city == null || city.equals(""))
+            city = "bj";
 
         /* 向北京服务器发送查询xml报文 */
         if (city.equals("bj"))
+        {
             handler.setEncryptionURLMode(Contants.getUrlProperty(this, "BJ_MERCHSNT_URL"));
+            handler.postToServer(page, Contants.getBjID(this, type) , Contants.getBjID(this, area));
+        }
         if (city.equals("sh"))
+        {
             handler.setEncryptionURLMode(Contants.getUrlProperty(this, "SH_MERCHSNT_URL"));
-        handler.postToServer(page, type, area);
+            handler.postToServer(page, Contants.getShID(this, type) , Contants.getBjID(this, area));
+        }
 
         int currentPage = Integer.parseInt(handler.getMessageByNodeName("currentPage"));
         int totalPage = Integer.parseInt(handler.getMessageByNodeName("totalPage"));
@@ -63,8 +84,13 @@ public class MerchantsGetter extends HttpServlet {
         request.setAttribute("merchants", merchants);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPage", totalPage);
+        request.setAttribute("city", city);
 
-        request.getRequestDispatcher("view/showMerchants.jsp").forward(request, response);
+        if (city.equals("bj"))
+            request.getRequestDispatcher("view/showBjMerchants.jsp").forward(request, response);
+
+        if (city.equals("sh"))
+            request.getRequestDispatcher("view/showShMerchants.jsp").forward(request, response);
 	}
 
 	/**

@@ -37,9 +37,15 @@ public class WeatherAsker extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ProcessHandler handler = new ProcessHandler(request, response);
-		//handler.setMode(ProcessHandlerMode.READ_MODE);
-		String city = (String)request.getAttribute("content");
+		//
         String openID = (String)request.getAttribute("userName");
+		String city = (String)request.getAttribute("content");
+        if (city == null || city.equals(""))
+        {
+            handler.setMode(ProcessHandlerMode.WRITE_MODE);
+            handler.pushToUser(openID, "请按照 天气#城市 的格式输入来获取天气情况");
+            return;
+        }
 		String content = getWeather(city, handler);
 		handler.setMode(ProcessHandlerMode.WRITE_MODE);
 		handler.pushToUser(openID, content);

@@ -1,34 +1,46 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
-    function goToPage(test)
+    function goToPage(test,currentPage,area,type)
     {
         if (test == 0)
         {
             //alert(parseInt($('#currentPage').val()) - 1);
-            $('#page').val(parseInt($('#currentPage').val()) - 1);
+            $('#page').val(currentPage - 1);
+            $('#area').val(area);
+            $('#type').val(type);
         }
         if (test == 1)
         {
-            alert(parseInt($('#currentPage').val()) + 1);
-            $('#page').val(parseInt($('#currentPage').val()) + 1);
+            //alert(currentPage);
+            $('#page').val(currentPage + 1);
+            $('#area').val(area);
+            $('#type').val(type);
         }
 
         $('#pageForm').submit();
     }
 </script>
-<p>
+    <div class="ui-grid-solo">
+    <div class="ui-block-a">
+        <p>第${currentPage}页/共${totalPage}页</p>
+    </div>
+    </div>
+    <div class="ui-grid-a">
+    <div class="ui-block-a">
     <c:if test="${currentPage==1}">
-        <a href="#" data-role="button" data-inline="true" class="ui-disabled">上一页</a>
+        <button disabled="">上一页</button>
     </c:if>
     <c:if test="${currentPage!=1}">
-        <a href="#" data-role="button" data-inline="true" onclick="goToPage(0)">上一页</a>
+        <button onclick="goToPage(0,${currentPage},'${area}','${type}')">上一页</button>
     </c:if>
-    <label>第${currentPage}页/共${totalPage}页</label>
-    <c:if test="${currentPage==totalPage}">
-        <a href="#" data-role="button" data-inline="true" class="ui-disabled">下一页</a>
+    </div>
+    <div class="ui-block-b">
+    <c:if test="${currentPage==totalPage || totalPage==0}">
+        <button disabled="">下一页</button>
     </c:if>
-    <c:if test="${currentPage!=totalPage}">
-        <a href="#" data-role="button" data-inline="true" onclick="goToPage(1)">下一页</a>
+    <c:if test="${currentPage!=totalPage && totalPage!=0}">
+        <button onclick="goToPage(1,${currentPage},'${area}','${type}')">下一页</button>
     </c:if>
-</p>
+    </div>
+    </div>

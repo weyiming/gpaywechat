@@ -10,11 +10,48 @@ public class Contants
     /* 智惠支付微信公共账户号 */
 	public static final String DEVELOPER_WECHAT_ACCOUNT = "chinagoldenpay";
 
+    /*private static String chinaToUnicode(String str){
+        String result="";
+        for (int i = 0; i < str.length(); i++){
+            int chr1 = (char) str.charAt(i);
+            if(chr1>=19968&&chr1<=171941){//汉字范围 \u4e00-\u9fa5 (中文)
+                result+="\\u" + Integer.toHexString(chr1);
+            }else{
+                result+=str.charAt(i);
+            }
+        }
+        return result;
+    }
+*/
     /* 向北京通信所用url */
     public static String getUrlProperty(HttpServlet httpServlet, String key)
     {
         try {
             pro.load(httpServlet.getServletContext().getResourceAsStream("/WEB-INF/config/url.properties"));
+            return pro.getProperty(key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /* 上海地区与商户类型的ID */
+    public static String getShID(HttpServlet httpServlet, String key)
+    {
+        try {
+            pro.load(httpServlet.getServletContext().getResourceAsStream("/WEB-INF/config/sh_type_and_area_id.properties"));
+            return pro.getProperty(key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /* 北京地区与商户类型的ID */
+    public static String getBjID(HttpServlet httpServlet, String key)
+    {
+        try {
+            pro.load(httpServlet.getServletContext().getResourceAsStream("/WEB-INF/config/bj_type_and_area_id.properties"));
             return pro.getProperty(key);
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,9 +102,9 @@ public class Contants
                     "输入“明细#智惠支付账户”进行指定智惠支付账户的最近一条消费明细查询，例如“明细#12345678”；\n" +
                     "4、输入“商户”进行特约商户的查询；\n" +
                     "5、输入“网点”进行购卡网点的查询；\n" +
-                    "6、输入“天气”进行本地天气的查询；\n" +
-                    "输入“天气#城市”进行指定城市天气的查询，例如“天气#北京”；\n" +
+                    "6、输入“天气#城市”进行指定城市天气的查询，例如“天气#北京”；\n" +
                     "7、输入“建议”进行投诉建议，或者有关问题的咨询；\n" +
                     "8、输入“帮助“查看本帮助信息。";
     public static final String ADVICE_FEEDBACK = "您的热心建议已经提交，请耐心等待客服人员的处理，我们会在第一时间联系您。";
+
 }

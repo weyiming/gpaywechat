@@ -82,8 +82,15 @@ public class EncryptionHandler {
 
 	public static String encoder(String originalText)
 	{
-		return ProcessMessage.Base64Encode(originalText.getBytes());
-	}
+        String text = "";
+        try {
+            text = ProcessMessage.Base64Encode(originalText.getBytes("utf-8"));
+            return text;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return text;
+    }
 	
 	public static String decoder(String originalText)
     {

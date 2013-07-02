@@ -10,6 +10,6 @@
     <style>.panel-content { padding:15px; }	</style>
 </head>
 <body>
-    <jsp:forward page="view/showMerchants.jsp"/>
+    <jsp:forward page="view/showBjMerchants.jsp"/>
 </body>
 </html>

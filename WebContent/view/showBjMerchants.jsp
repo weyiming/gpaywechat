@@ -15,9 +15,9 @@
         //alert($('#selectcity').val());
          var city = $('#city');
          city.val('sh');
-         $('#page').val(1);
          $('#area').val('#');
          $('#type').val('#');
+         $('#page').val(1);
          $('#pageForm').submit();
      }
  </script>

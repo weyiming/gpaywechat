@@ -14,7 +14,10 @@
         {
             //alert(currentPage);
             $('#page').val(currentPage + 1);
+
             $('#area').val(area);
+            //alert(area);
+            //alert($('#area').val());
             $('#type').val(type);
         }
 
@@ -40,7 +43,7 @@
         <button disabled="">下一页</button>
     </c:if>
     <c:if test="${currentPage!=totalPage && totalPage!=0}">
-        <button onclick="goToPage(1,${currentPage},'${area}','${type}')">下一页</button>
+        <button onclick="goToPage(1,${currentPage},'${area}','${type}')">下一页<!-- ${area} --></button>
     </c:if>
     </div>
     </div>

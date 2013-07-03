@@ -66,7 +66,7 @@ public class MerchantsGetter extends HttpServlet {
         if (city.equals("sh"))
         {
             handler.setEncryptionURLMode(Contants.getUrlProperty(this, "SH_MERCHSNT_URL"));
-            handler.postToServer(page, Contants.getShID(this, type) , Contants.getBjID(this, area));
+            handler.postToServer(page, Contants.getShID(this, type) , Contants.getShID(this, area));
         }
 
         int currentPage = Integer.parseInt(handler.getMessageByNodeName("currentPage"));
@@ -98,7 +98,7 @@ public class MerchantsGetter extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {ProcessHandler handler = new ProcessHandler(request, response);
         String openID = (String)request.getAttribute("userName");
-        String content = "<a href=\"" + Contants.getUrlProperty(this, "MERCHANT_LINK") + "?page=1\">请点击我</a>进行特约商户的查询!";
+        String content = "<a href=\"" + Contants.getUrlProperty(this, "MERCHANT_LINK") + "?page=1&type=%23&city=bj&area=%23\">请点击我</a>进行特约商户的查询!";
         handler.setMode(ProcessHandlerMode.WRITE_MODE);
         handler.pushToUser(openID, content);
 	}

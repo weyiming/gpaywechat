@@ -9,14 +9,15 @@
 </div>
 <div id="main">
     <script>
+
         function changeCity()
         {
             //alert($('#selectcity').val());
             var city = $('#city');
             city.val('bj');
-            $('#page').val(1);
             $('#area').val('#');
             $('#type').val('#');
+            $('#page').val(1);
             $('#pageForm').submit();
         }
     </script>
@@ -24,10 +25,11 @@
         <div data-role="fieldcontain">
             <label for="city">选择城市:</label>
             <select name="city" id="city" data-role="slider" onchange="changeCity()">
-                <option value="bj">北京</option>
+                <option value="bj" >北京</option>
                 <option value="sh" selected="selected">上海</option>
             </select>
         </div>
+
         <fieldset data-role="controlgroup" data-type="horizontal">
             <legend>选择商户区域和类型：</legend>
             <label for="area">请选择商户区域</label>
@@ -74,7 +76,6 @@
         <input type="hidden" name="page" id="page" value="1"/>
         <input type="submit" value="查询"/>
     </form>
-
     <div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
         <c:forEach items="${merchants}" var="merchant">
             <div data-role="collapsible" data-icon="false">
@@ -94,4 +95,4 @@
     <div class="center">
         <jsp:include page="include/page.jsp"/>
     </div>
-<jsp:include page="include/footer.jsp"/>
+    <jsp:include page="include/footer.jsp"/>

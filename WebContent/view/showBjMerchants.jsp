@@ -7,6 +7,7 @@
 <div id="label">
     <span>商户查询</span>
 </div>
+<div data-role="content">
 <div id="main">
  <script>
 
@@ -21,7 +22,7 @@
          $('#pageForm').submit();
      }
  </script>
-    <form id="pageForm" action="/MerchantsGetter" method="get">
+    <form id="pageForm" action="MerchantsGetter" method="get">
         <div data-role="fieldcontain">
             <label for="city">选择城市:</label>
             <select name="city" id="city" data-role="slider" onchange="changeCity()">
@@ -35,52 +36,52 @@
             <label for="area">请选择商户区域</label>
             <select name="area" id="area">
                 <option value="#">全北京</option>
-                <option value="顺义区">顺义区</option>
-                <option value="朝阳区">朝阳区</option>
-                <option value="宣武区">宣武区</option>
-                <option value="通州区">通州区</option>
-                <option value="房山区">房山区</option>
-                <option value="延庆县">延庆县</option>
-                <option value="平谷区">平谷区</option>
-                <option value="西城区">西城区</option>
-                <option value="密云区">密云区</option>
-                <option value="海淀区">海淀区</option>
-                <option value="大兴区">大兴区</option>
-                <option value="石景山区">石景山区</option>
-                <option value="丰台区">丰台区</option>
-                <option value="崇文区">崇文区</option>
-                <option value="经济开发区">经济开发区</option>
-                <option value="东城区">东城区</option>
-                <option value="昌平区">昌平区</option>
-                <option value="怀柔区">怀柔区</option>
-                <option value="门头沟区">门头沟区</option>
+                <option value="shunyiqu">顺义区</option>
+                <option value="chaoyangqu">朝阳区</option>
+                <option value="xuanwuqu">宣武区</option>
+                <option value="tongzhouqu">通州区</option>
+                <option value="fangshanqu">房山区</option>
+                <option value="yanqingxian">延庆县</option>
+                <option value="pingguqu">平谷区</option>
+                <option value="xichengqu">西城区</option>
+                <option value="miyunqu">密云区</option>
+                <option value="haidianqu">海淀区</option>
+                <option value="daxingqu">大兴区</option>
+                <option value="shijingshanqu">石景山区</option>
+                <option value="fengtaiqu">丰台区</option>
+                <option value="chongwenqu">崇文区</option>
+                <option value="jinjikaifaqu">经济开发区</option>
+                <option value="dongchengqu">东城区</option>
+                <option value="changpingqu">昌平区</option>
+                <option value="huairouqu">怀柔区</option>
+                <option value="mentougouqu">门头沟区</option>
             </select>
             <label for="type">商户类型</label>
             <select name="type" id="type">
                 <option value="#">全部</option>
-                <option value="百货">百货</option>
-                <option value="超市">超市</option>
-                <option value="电器">电器</option>
-                <option value="家居">家居</option>
-                <option value="餐饮">餐饮</option>
-                <option value="摄影">摄影</option>
-                <option value="美容美体">美容美体</option>
-                <option value="医疗保健">医疗保健</option>
-                <option value="酒店住宿">酒店住宿</option>
-                <option value="服饰饰品">服饰饰品</option>
-                <option value="眼镜店">眼镜店</option>
-                <option value="奢侈品">奢侈品</option>
-                <option value="西点甜品">西点甜品</option>
-                <option value="生活休闲">生活休闲</option>
-                <option value="教育培训">教育培训</option>
-                <option value="即将上线">即将上线</option>
-                <option value="缴费网点">缴费网点</option>
-                <option value="网上商城">网上商城</option>
-                <option value="其他">其他</option>
+                <option value="baihuo">百货</option>
+                <option value="chaoshi">超市</option>
+                <option value="dianqi">电器</option>
+                <option value="jiaju">家居</option>
+                <option value="canyin">餐饮</option>
+                <option value="sheying">摄影</option>
+                <option value="meirongmeiti">美容美体</option>
+                <option value="yiliaobaojian">医疗保健</option>
+                <option value="jiudianzhusu">酒店住宿</option>
+                <option value="fushishipin">服饰饰品</option>
+                <option value="yanjingdian">眼镜店</option>
+                <option value="shechipin">奢侈品</option>
+                <option value="xidiantianpin">西点甜品</option>
+                <option value="shenghuoxiuxian">生活休闲</option>
+                <option value="jiaoyupeixun">教育培训</option>
+                <option value="jijiangshangxian">即将上线</option>
+                <option value="jiaofeiwangdian">缴费网点</option>
+                <option value="wangshangshancheng">网上商城</option>
+                <option value="qita">其他</option>
             </select>
         </fieldset>
         <input type="hidden" name="page" id="page" value="1"/>
-        <input type="submit" value="查询"/>
+        <input type="submit" value="查询" />
     </form>
     <div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
     <c:forEach items="${merchants}" var="merchant">
@@ -101,4 +102,5 @@
 <div class="center">
     <jsp:include page="include/page.jsp"/>
 </div>
+<div>
 <jsp:include page="include/footer.jsp"/>

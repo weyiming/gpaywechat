@@ -10,7 +10,7 @@ public class Contants
     /* 智惠支付微信公共账户号 */
 	public static final String DEVELOPER_WECHAT_ACCOUNT = "chinagoldenpay";
 
-    /*private static String chinaToUnicode(String str){
+    private static String chinaToUnicode(String str){
         String result="";
         for (int i = 0; i < str.length(); i++){
             int chr1 = (char) str.charAt(i);
@@ -22,7 +22,7 @@ public class Contants
         }
         return result;
     }
-*/
+
     /* 向北京通信所用url */
     public static String getUrlProperty(HttpServlet httpServlet, String key)
     {
@@ -40,6 +40,7 @@ public class Contants
     {
         try {
             pro.load(httpServlet.getServletContext().getResourceAsStream("/WEB-INF/config/sh_type_and_area_id.properties"));
+            System.out.println(key);
             return pro.getProperty(key);
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,6 +78,7 @@ public class Contants
     public static final String WEATHER_SERVLET = "/WeatherAsker";
     public static final String ADVICE_SERVLET = "/Advice";
     public static final String HELP_SERVLET = "/Help";
+    public static final String WELCOME_SERVLET = "/Welcome";
 
     /* 用户指令 */
     public static final String BIND = "绑定";
@@ -89,7 +91,7 @@ public class Contants
     public static final String HELP = "帮助";
 
     /* 返回信息 */
-    public static final String WELCOME = "欢迎您关注智惠支付微信公众账户！";
+    public static final String WELCOME = "欢迎您关注智惠支付微信公众账户！\n";
     public static final String UNBOUND = "很遗憾，您还未进行微信和智惠支付账户的绑定，不能执行刚才的操作，请回复“绑定”完成账户的绑定操作。";
     public static final String UNKNOW_DIRECTIVE_ERROR = "很遗憾，您所输入的信息我不能识别，请按照帮助文档输入指令\n";
     public static final String SERVLET_ERROR = "很抱歉，服务器出错了，请检查格式，再次发送指令";
@@ -104,7 +106,8 @@ public class Contants
                     "5、输入“网点”进行购卡网点的查询；\n" +
                     "6、输入“天气#城市”进行指定城市天气的查询，例如“天气#北京”；\n" +
                     "7、输入“建议”进行投诉建议，或者有关问题的咨询；\n" +
-                    "8、输入“帮助“查看本帮助信息。";
+                    "8、输入“帮助“查看本帮助信息。\n" +
+                    "若要使用余额，明细功能，请先绑定智惠卡与您的微信账号。";
     public static final String ADVICE_FEEDBACK = "您的热心建议已经提交，请耐心等待客服人员的处理，我们会在第一时间联系您。";
 
 }

@@ -9,7 +9,7 @@
 <div id="main">
     <div class="maincontent">
         <div class="contentImg adviceImg"></div>
-        <form action="/AdvicePost" method="post">
+        <form action="AdvicePost" method="post">
             <input type="hidden" name="openID" value="${openID}"/>
             <div class="mt5">
                 <label for="title">主题：</label>

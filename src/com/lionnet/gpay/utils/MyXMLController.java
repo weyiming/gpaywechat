@@ -1,10 +1,7 @@
 package com.lionnet.gpay.utils;
 
 import com.thoughtworks.xstream.XStream;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
 import java.io.ByteArrayInputStream;
@@ -56,6 +53,12 @@ public class MyXMLController {
 		Element element = (Element)document.selectSingleNode("//" + nodeName);
 		return element.getText();
 	}
+
+    public String getCDATA(String nodeName)
+    {
+        Element element = (Element)document.selectSingleNode("//" + nodeName);
+        return (String)element.getData();
+    }
 
     /* 是否包含指定名称的节点 */
     public boolean isHas(String nodeName)

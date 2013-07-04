@@ -60,7 +60,7 @@ public class MyServletDispather extends HttpServlet {
         if (!ifDispatch)
         {
             handler.setMode(ProcessHandlerMode.WRITE_MODE);
-            handler.pushToUser(Contants.UNKNOW_DIRECTIVE_ERROR + Contants.HELP_TEXT);
+            handler.pushToUser((String)request.getAttribute("userName"), Contants.UNKNOW_DIRECTIVE_ERROR + Contants.HELP_TEXT);
         }
 	}
 }

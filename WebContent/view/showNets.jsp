@@ -28,10 +28,10 @@
     </div>
 </div>
 <div class="center">
-    <form id="pageForm" action="/NetsGetter" method="get">
+    <form id="pageForm" action="NetsGetter" method="get">
         <input type="hidden" value="${currentPage}" id="currentPage"/>
         <input type="hidden" value="" id="page"/>
     </form>
-    <jsp:include page="include/page.jsp"/>
+    <jsp:include page="include/netPage.jsp"/>
 </div>
 <jsp:include page="include/footer.jsp"/>

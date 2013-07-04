@@ -42,12 +42,14 @@ public class MerchantsGetter extends HttpServlet {
             page = Integer.parseInt(request.getParameter("page"));
         }
 
-        String type = new String(request.getParameter("type").getBytes(), "gb2312");
+
+        String type = request.getParameter("type");
+        System.out.println("type:" + type);
         if (type.equals("#"))
             type = "";
         if (type != null || !type.equals(""))
             request.setAttribute("type", type);
-        String area = new String(request.getParameter("area").getBytes(), "gb2312");
+        String area =  request.getParameter("area");
         if (area.equals("#"))
             area = "";
         if (area != null || !area.equals(""))

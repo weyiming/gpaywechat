@@ -7,12 +7,13 @@
 <div id="label">
 		<span>绑定<c:if test="${result==1}">成功</c:if><c:if test="${result==0}">失败</c:if></span>
 </div>
+<div data-role="content">
 <div id="main">
 	<div class="maincontent">
         <div class="contentImg bindImg"></div>
 	    <div class="mt10">
         <c:if test="${result==1}">
-			<h4>恭喜,您已经成功绑定微信账户与智慧卡账户！</h4>
+			<h4>恭喜,您已经成功绑定微信账户与智惠卡账户！</h4>
 		</c:if>
 		<c:if test="${result==0}">
 			<h4>很遗憾,您的此次绑定失败了！您可以选择继续绑定。</h4>
@@ -24,5 +25,6 @@
             </form>
         </div>
 	</div>
+</div>
 </div>
 <jsp:include page="include/footer.jsp"/>

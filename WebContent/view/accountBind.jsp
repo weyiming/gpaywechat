@@ -9,18 +9,18 @@
 <div id="main">
 	<div class="maincontent">
 	<div class="contentImg bindImg"></div>
-	<form action="/AccountBind" method="post">
+	<form action="AccountBind" method="post">
         <input type="hidden" name="openID" value="${openID}"/>
-        <div class="mt5">
-	        <label for="gpayAccount">智慧卡卡号：</label>
+        <div class="mt5" data-role="fieldcontain">
+	        <label for="gpayAccount">智惠卡卡号：</label>
             <input type="text" name="gpayAccount" id="gpayAccount" placeholder="16位卡号"/>
         </div>
-        <div class="mt10">
-	        <label for="gpayPassword">智慧卡密码：</label>
+        <div class="mt10" data-role="fieldcontain">
+	        <label for="gpayPassword">智惠卡密码：</label>
             <input type="password" name="gpayPassword" id="gpayPassword" placeholder="6位密码"/>
         </div>
         <div class="mt10">
-            <input type="submit" value="绑  定"/>
+            <input type="submit" value="绑  定" />
         </div>
 	</form>
 	</div>

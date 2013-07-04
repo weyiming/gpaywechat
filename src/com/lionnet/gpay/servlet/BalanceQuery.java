@@ -69,7 +69,7 @@ public class BalanceQuery extends HttpServlet {
         for (AccountBalance accountBalance:accountBalanceList)
         {
             content += "您卡号为" + accountBalance.getGpayAccount() +
-                    "的智慧卡余额为：" + accountBalance.getBalance() + "元\n" +
+                    "的智惠卡余额为：" + accountBalance.getBalance() + "元\n" +
                     "查询时间：" + accountBalance.getQueryTime() + "\n";
         }
 

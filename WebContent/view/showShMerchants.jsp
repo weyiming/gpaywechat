@@ -7,6 +7,9 @@
 <div id="label">
     <span>商户查询</span>
 </div>
+
+<!-- jquery mobile content begin -->
+<div data-role="content">
 <div id="main">
     <script>
 
@@ -21,7 +24,7 @@
             $('#pageForm').submit();
         }
     </script>
-    <form id="pageForm" action="/MerchantsGetter" method="get">
+    <form id="pageForm" action="MerchantsGetter" method="get">
         <div data-role="fieldcontain">
             <label for="city">选择城市:</label>
             <select name="city" id="city" data-role="slider" onchange="changeCity()">
@@ -35,42 +38,42 @@
             <label for="area">请选择商户区域</label>
             <select name="area" id="area">
                 <option value="#">全上海</option>
-                <option value="闵行区">闵行区</option>
-                <option value="南汇区">南汇区</option>
-                <option value="普陀区">普陀区</option>
-                <option value="崇明县">崇明县</option>
-                <option value="静安区">静安区</option>
-                <option value="卢湾区">卢湾区</option>
-                <option value="金山区">金山区</option>
-                <option value="虹口区">虹口区</option>
-                <option value="徐汇区">徐汇区</option>
-                <option value="黄浦区">黄浦区</option>
-                <option value="杨浦区">杨浦区</option>
-                <option value="奉贤区">奉贤区</option>
-                <option value="闸北区">闸北区</option>
-                <option value="长宁区">长宁区</option>
-                <option value="嘉定区">嘉定区</option>
-                <option value="青浦区">青浦区</option>
-                <option value="宝山区">宝山区</option>
-                <option value="松江区">松江区</option>
-                <option value="浦东新区">浦东新区</option>
-                <option value="崇明区">崇明区</option>
+                <option value="minxingqu">闵行区</option>
+                <option value="nanhuiqu">南汇区</option>
+                <option value="putuoqu">普陀区</option>
+                <option value="chongmingxian">崇明县</option>
+                <option value="jinganqu">静安区</option>
+                <option value="luwanqu">卢湾区</option>
+                <option value="jinshanqu">金山区</option>
+                <option value="hongkouqu">虹口区</option>
+                <option value="xuhuiqu">徐汇区</option>
+                <option value="huangpuqu">黄浦区</option>
+                <option value="yangpuqu">杨浦区</option>
+                <option value="fengxianqu">奉贤区</option>
+                <option value="zhabeiqu">闸北区</option>
+                <option value="changningqu">长宁区</option>
+                <option value="jiadingqu">嘉定区</option>
+                <option value="qingpuqu">青浦区</option>
+                <option value="baoshanqu">宝山区</option>
+                <option value="songjiangqu">松江区</option>
+                <option value="pudongxinqu">浦东新区</option>
+                <option value="chongmingqu">崇明区</option>
             </select>
             <label for="type">商户类型</label>
             <select name="type" id="type">
                 <option value="#">全部</option>
-                <option value="百货商城">百货商城</option>
-                <option value="餐饮美食">餐饮美食</option>
-                <option value="食品西点">食品西点</option>
-                <option value="酒店宾馆">酒店宾馆</option>
-                <option value="家电家居">家电家居</option>
-                <option value="生活服务">生活服务</option>
-                <option value="休闲娱乐">休闲娱乐</option>
-                <option value="票务旅游">票务旅游</option>
-                <option value="医疗药房">医疗药房</option>
-                <option value="教育培训">教育培训</option>
-                <option value="汽车用品">汽车用品</option>
-                <option value="各类专卖">各类专卖</option>
+                <option value="bihuoshangcheng">百货商城</option>
+                <option value="canyinmeishi">餐饮美食</option>
+                <option value="shipinxidian">食品西点</option>
+                <option value="jiudianbinguan">酒店宾馆</option>
+                <option value="jiadianjiaju">家电家居</option>
+                <option value="shenghuofuwu">生活服务</option>
+                <option value="xiuxianyule">休闲娱乐</option>
+                <option value="piaowulvyou">票务旅游</option>
+                <option value="yiliaoyaofang">医疗药房</option>
+                <option value="jiaoyupeixun">教育培训</option>
+                <option value="qicheyongpin">汽车用品</option>
+                <option value="geleizhuanmai">各类专卖</option>
             </select>
         </fieldset>
         <input type="hidden" name="page" id="page" value="1"/>
@@ -95,4 +98,6 @@
     <div class="center">
         <jsp:include page="include/page.jsp"/>
     </div>
-    <jsp:include page="include/footer.jsp"/>
+    </div>
+    <!-- jquery mobile content end -->
+ <jsp:include page="include/footer.jsp"/>

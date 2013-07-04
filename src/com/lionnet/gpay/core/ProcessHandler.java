@@ -42,7 +42,29 @@ public class ProcessHandler {
     public boolean switchServletAndDispatch()
     {
         setMode(ProcessHandlerMode.READ_MODE);
-        String userDirective = getUserDirectiveFromXml();
+        request.setAttribute("userName", getUserName());
+
+        String userDirective = null;
+        if (xmlController.isHas("Event"))
+        {
+
+            userDirective = xmlController.getCDATA("Event");
+            System.out.println(userDirective);
+            if (userDirective.equals("subscribe") || userDirective.contains("subscribe") )
+            {
+                servletToGo = Contants.WELCOME_SERVLET;
+                request.setAttribute("userName", getUserName());
+                try {
+                    request.getRequestDispatcher(servletToGo).forward(request, response);
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else
+            userDirective = getUserDirectiveFromXml();
 
 //        以下代码适用于java7，低于7的版本switch语句中无法使用String类型
 //		switch(userDirective)
@@ -106,8 +128,6 @@ public class ProcessHandler {
             request.setAttribute("content", (userDirective.split("#"))[1]);
             /*System.out.println((userDirective.split("#"))[1]);*/
         }
-        request.setAttribute("userName", getUserName());
-        /*System.out.println(getUserName());*/
         try {
             request.getRequestDispatcher(servletToGo).forward(request, response);
         } catch (ServletException e) {

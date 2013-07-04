@@ -68,7 +68,7 @@ public class DetailQuery extends HttpServlet {
         for (Tran tran:tranList)
         {
             content += "您卡号为" + tran.getGpayAccount() +
-                    "的智慧卡余额于" + tran.getDate() + " " + tran.getTrantime() +
+                    "的智惠卡余额于" + tran.getDate() + " " + tran.getTrantime() +
                     "进行了一笔" + tran.getTranAmt() + "元的交易\n" +
                     "交易类型：" + tran.getTranType() + "\n" +
                     "交易状态：" + tran.getTranStat() + "\n" +

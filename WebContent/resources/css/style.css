@@ -45,7 +45,7 @@ h3 {font-size: 18px;  margin:0; padding:0;}
 #logo{height:60px;background-image:url(../../resources/img/logo.jpg);background-repeat:no-repeat;}
 #label{background-color:#c8101b;padding:5px 5px;}
 #label span{margin:0px 10px;color:#ffffff;font-size:16px;}
-#main{margin:10px auto;padding:5px 0;width:96%;}
+#main{margin:10px auto;padding:5px 0;}
 .maincontent{padding: 5px 15px;border:1px solid #dddddd;background-color:#ffffff;border-radius:0.4em;}
 .mt5{margin-top: 5px}
 .mt10{margin-top: 10px}

@@ -49,7 +49,7 @@ public class ProcessHandler {
         {
 
             userDirective = xmlController.getCDATA("Event");
-            System.out.println(userDirective);
+            //System.out.println(userDirective);
             if (userDirective.equals("subscribe") || userDirective.contains("subscribe") )
             {
                 servletToGo = Contants.WELCOME_SERVLET;
@@ -96,27 +96,27 @@ public class ProcessHandler {
 //		}
 
 //        java7以下版本使用以下代码
-        if (userDirective.equals(Contants.BIND))
+        if (userDirective.equals(Contants.BIND) || userDirective.equals("1"))
             servletToGo = Contants.BIND_SERVLET;
-        else if (userDirective.equals(Contants.BALANCE))
+        else if (userDirective.equals(Contants.BALANCE) || userDirective.equals("2"))
             servletToGo = Contants.BALANCE_SERVLET;
-        else if (userDirective.equals(Contants.DETAIL))
+        else if (userDirective.equals(Contants.DETAIL) || userDirective.equals("3"))
             servletToGo = Contants.DETAIL_SERVLET;
-        else if (userDirective.equals(Contants.NET))
+        else if (userDirective.equals(Contants.NET) || userDirective.equals("5"))
             servletToGo = Contants.NET_SERVLET;
-        else if (userDirective.equals(Contants.MERCHANT))
+        else if (userDirective.equals(Contants.MERCHANT) || userDirective.equals("4"))
             servletToGo = Contants.MERCHANT_SERVLET;
-        else if (userDirective.equals(Contants.ADVICE))
+        else if (userDirective.equals(Contants.ADVICE) || userDirective.equals("7"))
             servletToGo = Contants.ADVICE_SERVLET;
-        else if (userDirective.equals(Contants.WEATHER))
+        else if (userDirective.equals(Contants.WEATHER) || userDirective.equals("6"))
             servletToGo = Contants.WEATHER_SERVLET;
-        else if (userDirective.equals(Contants.HELP))
+        else if (userDirective.equals(Contants.HELP) || userDirective.equals("8"))
             servletToGo = Contants.HELP_SERVLET;
-        else if (userDirective.contains(Contants.BALANCE))
+        else if (userDirective.contains(Contants.BALANCE) || userDirective.contains("2"))
             servletToGo = Contants.BALANCE_SERVLET;
-        else if (userDirective.contains(Contants.DETAIL))
+        else if (userDirective.contains(Contants.DETAIL) || userDirective.contains("3"))
             servletToGo = Contants.DETAIL_SERVLET;
-        else if (userDirective.contains(Contants.WEATHER))
+        else if (userDirective.contains(Contants.WEATHER) || userDirective.contains("6"))
             servletToGo = Contants.WEATHER_SERVLET;
         else
             return false;
@@ -292,7 +292,7 @@ public class ProcessHandler {
 	{
         String checksum = EncryptionHandler.getChecksum(xmlController.XMLToString());
         xmlController.appendMD5(checksum);
-        System.out.println(xmlController.XMLToString());
+        //System.out.println(xmlController.XMLToString());
 		String postTextAfterEncrypt = EncryptionHandler.encoder(xmlController.XMLToString());
 
         HttpURLConnection conn = null;
@@ -305,7 +305,7 @@ public class ProcessHandler {
 			bos.write(postTextAfterEncrypt.getBytes("utf-8"));
             bos.close();
 			String textFromConn = IOUtils.toString(conn.getInputStream());
-            System.out.println(EncryptionHandler.decoder(textFromConn));
+            //System.out.println(EncryptionHandler.decoder(textFromConn));
 			xmlController.initInputDocument(EncryptionHandler.decoder(textFromConn));
 		} catch (IOException e) {
 			e.printStackTrace();

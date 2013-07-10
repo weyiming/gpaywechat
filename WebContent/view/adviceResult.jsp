@@ -14,7 +14,7 @@
             <h4>提交成功！感谢您的建议！我们的工作人员会尽快与您取得联系。</h4>
         </div>
         <div class="mt10">
-            <form action="/Advice?openID=${openID}" method="get">
+            <form action="Advice?openID=${openID}" method="get">
                 <input type="submit" value="继 续 反 馈"/>
             </form>
         </div>

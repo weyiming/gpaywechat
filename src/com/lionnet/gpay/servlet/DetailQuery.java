@@ -51,7 +51,9 @@ public class DetailQuery extends HttpServlet {
         if (!handler.checkFrom() || handler.isError())
         {
             handler.setMode(ProcessHandlerMode.WRITE_MODE);
-            handler.pushToUser(openID, Contants.SERVLET_ERROR);
+            handler.pushToUser(openID, Contants.UNBOUND +
+                    "<a href=\"" + Contants.getUrlProperty(this, "BIND_LINK") + "?openID=" + openID + "\">请点击我</a>" +
+                    "进行绑定操作。");
             return;
         }
 

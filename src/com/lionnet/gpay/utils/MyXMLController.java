@@ -86,7 +86,12 @@ public class MyXMLController {
         createOpenIDAndGpayAccountMessage(openID, gpayAccount);
 		
 		Element gpayPasswordElement = root.addElement("pinblock");
-		gpayPasswordElement.addText(pinblock);
+        if (pinblock == null || pinblock.equals(""))
+        {
+            gpayPasswordElement.addText("");
+        }
+		else
+            gpayPasswordElement.addText(pinblock);
 	}
 
     /* 创建商户查询xml报文 */

@@ -44,7 +44,7 @@ public class MerchantsGetter extends HttpServlet {
 
 
         String type = request.getParameter("type");
-        System.out.println("type:" + type);
+        //System.out.println("type:" + type);
         if (type.equals("#"))
             type = "";
         if (type != null || !type.equals(""))

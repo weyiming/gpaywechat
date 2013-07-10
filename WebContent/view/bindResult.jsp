@@ -20,7 +20,7 @@
 		</c:if>
         </div>
         <div class="mt10">
-		    <form action="/AccountBind?openID=${openID}" method="get">
+		    <form action="AccountBind?openID=${openID}" method="get">
                 <input type="submit" value="继 续 绑 定"/>
             </form>
         </div>

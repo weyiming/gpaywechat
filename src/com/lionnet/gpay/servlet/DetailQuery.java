@@ -48,7 +48,7 @@ public class DetailQuery extends HttpServlet {
         handler.postToServer(openID, gpayAccount);
 
         /* 错误检查，若非北京发来的消息或者返回的是错误报文则返回错误信息给用户 */
-        if (!handler.checkFrom() || handler.isError())
+        if (handler.isError())
         {
             handler.setMode(ProcessHandlerMode.WRITE_MODE);
             handler.pushToUser(openID, Contants.UNBOUND +
@@ -67,19 +67,29 @@ public class DetailQuery extends HttpServlet {
                 ).getTranList();
 
         String content = "";
-        for (Tran tran:tranList)
+        if (tranList == null)
         {
-            content += "您卡号为" + tran.getGpayAccount() +
-                    "的智惠卡余额于" + tran.getDate() + " " + tran.getTrantime() +
-                    "进行了一笔" + tran.getTranAmt() + "元的交易\n" +
-                    "交易类型：" + tran.getTranType() + "\n" +
-                    "交易状态：" + tran.getTranStat() + "\n" +
-                    "交易商户：" + tran.getMerchantName() + "\n" +
-                    "交易编号：" + tran.getTrace() + "\n";
+            content = "此卡还未进行过消费，没有消费明细记录。";
+            handler.setMode(ProcessHandlerMode.WRITE_MODE);
+            handler.pushToUser(openID, content);
+        }
+        else
+        {
+            for (Tran tran:tranList)
+            {
+                content += "您卡号为" + tran.getGpayAccount() +
+                        "的智惠卡余额于" + tran.getDate() + " " + tran.getTrantime() +
+                        "进行了一笔" + tran.getTranAmt() + "元的交易\n" +
+                        "交易类型：" + tran.getTranType() + "\n" +
+                        "交易状态：" + tran.getTranStat() + "\n" +
+                        "交易商户：" + tran.getMerchantName() + "\n" +
+                        "交易编号：" + tran.getTrace() + "\n";
+            }
+
+            handler.setMode(ProcessHandlerMode.WRITE_MODE);
+            handler.pushToUser(openID, content);
         }
 
-        handler.setMode(ProcessHandlerMode.WRITE_MODE);
-        handler.pushToUser(openID, content);
 	}
 
 }

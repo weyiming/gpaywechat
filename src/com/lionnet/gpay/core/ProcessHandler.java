@@ -66,6 +66,8 @@ public class ProcessHandler {
         else
             userDirective = getUserDirectiveFromXml();
 
+        //System.out.println(userDirective);
+
 //        以下代码适用于java7，低于7的版本switch语句中无法使用String类型
 //		switch(userDirective)
 //		{
@@ -112,15 +114,23 @@ public class ProcessHandler {
             servletToGo = Contants.WEATHER_SERVLET;
         else if (userDirective.equals(Contants.HELP) || userDirective.equals("8"))
             servletToGo = Contants.HELP_SERVLET;
-        else if (userDirective.contains(Contants.BALANCE) || userDirective.contains("2"))
-            servletToGo = Contants.BALANCE_SERVLET;
-        else if (userDirective.contains(Contants.DETAIL) || userDirective.contains("3"))
+
+        else if (userDirective.split("#")[0].equals(Contants.DETAIL) || userDirective.split("#")[0].equals("3"))
+        {
             servletToGo = Contants.DETAIL_SERVLET;
+            //System.out.println("detail");
+        }
+        else if (userDirective.split("#")[0].equals(Contants.BALANCE) || userDirective.split("#")[0].equals("2"))
+        {
+            servletToGo = Contants.BALANCE_SERVLET;
+            //System.out.println("balance");
+        }
         else if (userDirective.contains(Contants.WEATHER) || userDirective.contains("6"))
             servletToGo = Contants.WEATHER_SERVLET;
         else
             return false;
 
+        //System.out.println(servletToGo);
 		/* 派发到指定的servlet */
 
         if (userDirective.contains("#"))

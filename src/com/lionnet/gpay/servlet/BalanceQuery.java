@@ -49,7 +49,7 @@ public class BalanceQuery extends HttpServlet {
         handler.postToServer(openID, gpayAccount);
 
         /* 错误检查，若非北京发来的消息或者返回的是错误报文则返回错误信息给用户 */
-        if (!handler.checkFrom() || handler.isError())
+        if (handler.isError())
         {
             handler.setMode(ProcessHandlerMode.WRITE_MODE);
             handler.pushToUser(openID, Contants.UNBOUND +

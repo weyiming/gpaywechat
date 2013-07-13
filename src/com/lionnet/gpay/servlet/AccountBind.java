@@ -46,7 +46,9 @@ public class AccountBind extends HttpServlet {
 
 		/* 从服务器取得绑定结果 */
 		int result = Integer.parseInt(handler.getMessageByNodeName("bindResult"));
+        String bindMsg = handler.getMessageByNodeName("bindMsg");
 		request.setAttribute("result", result);
+        request.setAttribute("bindMsg", bindMsg);
         request.setAttribute("openID", openID);
 		request.getRequestDispatcher("view/bindResult.jsp").forward(request, response);
 	}

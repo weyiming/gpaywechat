@@ -26,7 +26,7 @@ public class test {
                 "<xml>" +
                 "<FromUserName>oCDaNjoSSn6mVPI5sFRAWSWIqQhw</FromUserName>" +
                 "<ToUserName>oCDaNjoSSn6mVPI5sFRAWSWIqQhw</ToUserName>" +
-                "<Content>余额</Content>" +
+                "<Content>明细#9516820000000013</Content>" +
                 "</xml>",
                 "UTF-8");
         httpPost.setEntity(xmlEntity);
